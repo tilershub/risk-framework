@@ -45,20 +45,37 @@ this.instrumentConfig = {
 }
 
 calculate(params) {
-const { accountSize, riskPercent, entryPrice, stopLoss, currencyPair, leverage } = params;
+console.log(‘Input params:’, params);
 
 ```
+const { accountSize, riskPercent, entryPrice, stopLoss, currencyPair, leverage = 100 } = params;
+
 if (!this.validateInputs(params)) {
+  console.error('Validation failed for params:', params);
   throw new Error('Invalid input parameters');
 }
 
 const config = this.instrumentConfig[currencyPair] || this.instrumentConfig['EURUSD'];
+console.log('Using config for', currencyPair, ':', config);
+
 const riskAmount = (riskPercent / 100) * accountSize;
 const priceDifference = Math.abs(entryPrice - stopLoss);
 const isLong = stopLoss < entryPrice; // Fixed: Long means SL is below entry
 
+console.log('Risk amount:', riskAmount);
+console.log('Price difference:', priceDifference);
+console.log('Is long:', isLong);
+
 const pipsAtRisk = priceDifference * config.pipMultiplier;
 const pipValue = this.calculatePipValue(currencyPair, entryPrice, config);
+
+console.log('Pips at risk:', pipsAtRisk);
+console.log('Pip value:', pipValue);
+
+if (pipValue === 0 || isNaN(pipValue)) {
+  throw new Error(`Invalid pip value calculated: ${pipValue} for ${currencyPair}`);
+}
+
 const lotSize = riskAmount / (pipsAtRisk * pipValue);
 const marginRequired = this.calculateMargin(lotSize, entryPrice, leverage, config, currencyPair);
 const marginPercent = (marginRequired / accountSize) * 100;
@@ -66,28 +83,46 @@ const marginPercent = (marginRequired / accountSize) * 100;
 const potentialProfit = riskAmount; // 1:1 RR
 const profitPrice = isLong ? entryPrice + priceDifference : entryPrice - priceDifference;
 
-return {
-  lotSize,
-  riskAmount,
-  marginRequired,
-  marginPercent,
-  potentialProfit,
-  profitPrice,
-  pipsAtRisk,
+const result = {
+  lotSize: Number(lotSize.toFixed(4)),
+  riskAmount: Number(riskAmount.toFixed(2)),
+  marginRequired: Number(marginRequired.toFixed(2)),
+  marginPercent: Number(marginPercent.toFixed(2)),
+  potentialProfit: Number(potentialProfit.toFixed(2)),
+  profitPrice: Number(profitPrice.toFixed(5)),
+  pipsAtRisk: Number(pipsAtRisk.toFixed(1)),
   isLong,
   direction: isLong ? 'LONG' : 'SHORT',
-  pipValue
+  pipValue: Number(pipValue.toFixed(4)),
+  currencyPair,
+  entryPrice,
+  stopLoss,
+  leverage
 };
+
+console.log('Final result:', result);
+return result;
 ```
 
 }
 
-validateInputs({ accountSize, riskPercent, entryPrice, stopLoss }) {
-return accountSize > 0 &&
-riskPercent > 0 &&
-entryPrice > 0 &&
-stopLoss > 0 &&
-entryPrice !== stopLoss;
+validateInputs({ accountSize, riskPercent, entryPrice, stopLoss, currencyPair }) {
+console.log(‘Validating inputs:’, { accountSize, riskPercent, entryPrice, stopLoss, currencyPair });
+
+```
+const isValid = accountSize > 0 && 
+       riskPercent > 0 && 
+       riskPercent <= 100 &&
+       entryPrice > 0 && 
+       stopLoss > 0 && 
+       entryPrice !== stopLoss &&
+       currencyPair && 
+       typeof currencyPair === 'string';
+       
+console.log('Validation result:', isValid);
+return isValid;
+```
+
 }
 
 calculatePipValue(currencyPair, entryPrice, config) {
