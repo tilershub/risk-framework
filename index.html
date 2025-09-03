@@ -311,14 +311,14 @@
     <div class="ftmo-cta">
         <h2 style="margin-bottom: 15px; font-size: 1.8rem;">Ready to Get Funded?</h2>
         <p style="margin-bottom: 25px; font-size: 1.1rem;">Start your FTMO Challenge today with up to $200,000 funding!</p>
-        <a href="https://ftmo.com/?affiliates=your-affiliate-id" class="ftmo-btn" target="_blank">
-            🚀 Start FTMO Challenge Now
+        <a href="https://ftmo.com" class="ftmo-btn" target="_blank">
+            Start FTMO Challenge Now
         </a>
     </div>
 
     <div class="dashboard">
         <div class="card">
-            <h3 class="card-title">📊 Account Status</h3>
+            <h3 class="card-title">Account Status</h3>
             <div class="metric">
                 <span class="metric-label">Starting Capital</span>
                 <span class="metric-value">$<span id="startingCapital">10,000</span></span>
@@ -338,7 +338,7 @@
         </div>
 
         <div class="card">
-            <h3 class="card-title">🎯 Daily Target Progress</h3>
+            <h3 class="card-title">Daily Target Progress</h3>
             <div class="progress-ring">
                 <svg>
                     <circle class="progress-ring-circle" cx="60" cy="60" r="50"></circle>
@@ -353,7 +353,7 @@
         </div>
 
         <div class="card">
-            <h3 class="card-title">⚠️ Risk Monitor</h3>
+            <h3 class="card-title">Risk Monitor</h3>
             <div class="metric">
                 <span class="metric-label">
                     <span class="status-indicator" id="marginStatus"></span>
@@ -378,7 +378,7 @@
         </div>
 
         <div class="card">
-            <h3 class="card-title">📈 Trade Statistics</h3>
+            <h3 class="card-title">Trade Statistics</h3>
             <div class="metric">
                 <span class="metric-label">Trades Today</span>
                 <span class="metric-value" id="tradesCount">0</span>
@@ -399,7 +399,7 @@
     </div>
 
     <div class="calculator">
-        <h3 style="margin-bottom: 20px; font-size: 1.5rem;">🧮 Position Size Calculator</h3>
+        <h3 style="margin-bottom: 20px; font-size: 1.5rem;">Position Size Calculator</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
             <div class="input-group">
                 <label for="accountSize">Account Size ($)</label>
@@ -431,8 +431,7 @@
             <div class="input-group">
                 <label for="currencyPair">Currency Pair</label>
                 <select id="currencyPair">
-                    <!-- Major Pairs -->
-                    <optgroup label="💎 Major Pairs">
+                    <optgroup label="Major Pairs">
                         <option value="EURUSD" selected>EUR/USD</option>
                         <option value="GBPUSD">GBP/USD</option>
                         <option value="USDJPY">USD/JPY</option>
@@ -441,89 +440,70 @@
                         <option value="NZDUSD">NZD/USD</option>
                         <option value="USDCAD">USD/CAD</option>
                     </optgroup>
-                    
-                    <!-- Minor Pairs -->
-                    <optgroup label="🔸 Minor Pairs">
+                    <optgroup label="Minor Pairs">
                         <option value="EURGBP">EUR/GBP</option>
                         <option value="EURJPY">EUR/JPY</option>
                         <option value="EURCHF">EUR/CHF</option>
-                        <option value="EURAUD">EUR/AUD</option>
-                        <option value="EURNZD">EUR/NZD</option>
-                        <option value="EURCAD">EUR/CAD</option>
                         <option value="GBPJPY">GBP/JPY</option>
                         <option value="GBPCHF">GBP/CHF</option>
-                        <option value="GBPAUD">GBP/AUD</option>
-                        <option value="GBPNZD">GBP/NZD</option>
-                        <option value="GBPCAD">GBP/CAD</option>
                         <option value="AUDJPY">AUD/JPY</option>
                         <option value="AUDCHF">AUD/CHF</option>
-                        <option value="AUDNZD">AUD/NZD</option>
-                        <option value="AUDCAD">AUD/CAD</option>
                         <option value="NZDJPY">NZD/JPY</option>
                         <option value="NZDCHF">NZD/CHF</option>
-                        <option value="NZDCAD">NZD/CAD</option>
-                        <option value="CADJPY">CAD/JPY</option>
-                        <option value="CADCHF">CAD/CHF</option>
                         <option value="CHFJPY">CHF/JPY</option>
                     </optgroup>
-                    
-                    <!-- Exotic Pairs -->
-                    <optgroup label="🌟 Exotic Pairs">
-                        <option value="USDSEK">USD/SEK</option>
-                        <option value="USDNOK">USD/NOK</option>
-                        <option value="USDDKK">USD/DKK</option>
-                        <option value="USDPLN">USD/PLN</option>
-                        <option value="USDCZK">USD/CZK</option>
-                        <option value="USDHUF">USD/HUF</option>
-                        <option value="USDSGD">USD/SGD</option>
-                        <option value="USDHKD">USD/HKD</option>
-                        <option value="USDTRY">USD/TRY</option>
-                        <option value="USDZAR">USD/ZAR</option>
-                        <option value="USDMXN">USD/MXN</option>
-                    </optgroup>
-                    
-                    <!-- Commodities -->
-                    <optgroup label="🥇 Commodities">
+                    <optgroup label="Commodities">
                         <option value="XAUUSD">Gold (XAU/USD)</option>
                         <option value="XAGUSD">Silver (XAG/USD)</option>
-                        <option value="XPTUSD">Platinum (XPT/USD)</option>
-                        <option value="XPDUSD">Palladium (XPD/USD)</option>
-                        <option value="USOIL">US Oil (WTI)</option>
-                        <option value="UKOIL">UK Oil (Brent)</option>
-                        <option value="NATGAS">Natural Gas</option>
+                        <option value="USOIL">US Oil</option>
+                        <option value="UKOIL">UK Oil</option>
                     </optgroup>
-                    
-                    <!-- Indices -->
-                    <optgroup label="📊 Indices">
-                        <option value="US30">Dow Jones (US30)</option>
-                        <option value="US500">S&P 500 (US500)</option>
-                        <option value="NAS100">Nasdaq 100 (NAS100)</option>
-                        <option value="UK100">FTSE 100 (UK100)</option>
-                        <option value="GER40">DAX 40 (GER40)</option>
-                        <option value="FRA40">CAC 40 (FRA40)</option>
-                        <option value="JPN225">Nikkei 225 (JPN225)</option>
-                        <option value="AUS200">ASX 200 (AUS200)</option>
-                        <option value="HK50">Hang Seng 50 (HK50)</option>
+                    <optgroup label="Indices">
+                        <option value="US30">Dow Jones</option>
+                        <option value="US500">S&P 500</option>
+                        <option value="NAS100">Nasdaq 100</option>
+                        <option value="UK100">FTSE 100</option>
+                        <option value="GER40">DAX 40</option>
                     </optgroup>
-                    
-                    <!-- Cryptocurrencies -->
-                    <optgroup label="🚀 Cryptocurrencies">
-                        <option value="BTCUSD">Bitcoin (BTC/USD)</option>
-                        <option value="ETHUSD">Ethereum (ETH/USD)</option>
-                        <option value="ADAUSD">Cardano (ADA/USD)</option>
-                        <option value="SOLUSD">Solana (SOL/USD)</option>
-                        <option value="DOTUSD">Polkadot (DOT/USD)</option>
-                        <option value="LINKUSD">Chainlink (LINK/USD)</option>
-                        <option value="BNBUSD">Binance Coin (BNB/USD)</option>
-                        <option value="XRPUSD">Ripple (XRP/USD)</option>
-                        <option value="LTCUSD">Litecoin (LTC/USD)</option>
-                        <option value="MATICUSD">Polygon (MATIC/USD)</option>
+                    <optgroup label="Cryptocurrencies">
+                        <option value="BTCUSD">Bitcoin</option>
+                        <option value="ETHUSD">Ethereum</option>
+                        <option value="ADAUSD">Cardano</option>
+                        <option value="SOLUSD">Solana</option>
+                        <option value="DOTUSD">Polkadot</option>
                     </optgroup>
                 </select>
             </div>
         </div>
         <button class="btn" onclick="calculatePosition()" style="margin-top: 20px;">Calculate Position Size</button>
         <div id="calculationResult" style="margin-top: 20px;"></div>
+    </div>
+
+    <div class="ftmo-cta" style="margin: 40px 0;">
+        <h2 style="margin-bottom: 15px; font-size: 1.6rem;">💰 Ready to Scale Your Trading?</h2>
+        <p style="margin-bottom: 20px; font-size: 1rem; opacity: 0.9;">
+            Join thousands of successful traders who got funded through FTMO
+        </p>
+        <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; flex-wrap: wrap;">
+            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; min-width: 120px; text-align: center;">
+                <div style="font-size: 1.4rem; font-weight: bold; color: #00ff9d;">$200K</div>
+                <div style="font-size: 0.9rem;">Max Funding</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; min-width: 120px; text-align: center;">
+                <div style="font-size: 1.4rem; font-weight: bold; color: #00ff9d;">80%</div>
+                <div style="font-size: 0.9rem;">Profit Split</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; min-width: 120px; text-align: center;">
+                <div style="font-size: 1.4rem; font-weight: bold; color: #00ff9d;">No</div>
+                <div style="font-size: 0.9rem;">Time Limits</div>
+            </div>
+        </div>
+        <a href="https://ftmo.com" class="ftmo-btn" target="_blank" style="font-size: 1.1rem; padding: 18px 35px;">
+            🚀 Get Funded Today - Start Challenge
+        </a>
+        <div style="margin-top: 15px; font-size: 0.85rem; opacity: 0.8;">
+            ✅ No hidden fees • ✅ Instant payouts • ✅ Professional support
+        </div>
     </div>
 
     <div class="rules-grid">
@@ -570,7 +550,7 @@
     </div>
 
     <div style="text-align: center; margin: 30px 0; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 15px;">
-        <h3 style="margin-bottom: 20px;">🎮 Demo Controls</h3>
+        <h3 style="margin-bottom: 20px;">Demo Controls</h3>
         <button class="btn" onclick="simulateTrade(true)" style="margin: 0 10px;">Simulate Winning Trade</button>
         <button class="btn" onclick="simulateTrade(false)" style="margin: 0 10px;">Simulate Losing Trade</button>
         <button class="btn" onclick="resetAccount()" style="margin: 0 10px;">Reset Account</button>
@@ -578,7 +558,6 @@
 </div>
 
 <script>
-    // State management
     let tradingState = {
         startingCapital: 10000,
         currentEquity: 10000,
@@ -590,15 +569,13 @@
         daysSinceBreak: 0
     };
 
-    // Initialize display
     function updateDisplay() {
         const dailyPnL = tradingState.currentEquity - tradingState.dailyStartEquity;
         const dailyPnLPercent = (dailyPnL / tradingState.dailyStartEquity) * 100;
-        const drawdownPercent = ((tradingState.startingCapital - tradingState.currentEquity) / tradingState.startingCapital) * 100;
+        const drawdownPercent = Math.max(0, ((tradingState.startingCapital - tradingState.currentEquity) / tradingState.startingCapital) * 100);
         const winRate = tradingState.tradesCount > 0 ? (tradingState.winCount / tradingState.tradesCount) * 100 : 0;
         const targetProgress = Math.min(Math.max(dailyPnLPercent, 0), 100);
 
-        // Update basic metrics
         document.getElementById('startingCapital').textContent = tradingState.startingCapital.toLocaleString();
         document.getElementById('currentEquity').textContent = tradingState.currentEquity.toLocaleString();
         document.getElementById('dailyPnL').textContent = (dailyPnL >= 0 ? '+' : '') + '$' + dailyPnL.toFixed(2);
@@ -606,74 +583,233 @@
         document.getElementById('drawdownPercent').textContent = drawdownPercent.toFixed(2) + '%';
         document.getElementById('drawdownPercent').style.color = drawdownPercent > 3 ? '#ff3838' : '#00ff9d';
 
-        // Update progress ring
         const circumference = 2 * Math.PI * 50;
         const offset = circumference - (targetProgress / 100) * circumference;
         document.getElementById('targetProgress').style.strokeDashoffset = offset;
         document.getElementById('targetText').textContent = targetProgress.toFixed(0) + '%';
 
-        // Update status indicators
-        updateStatusIndicators(drawdownPercent);
-
-        // Update trade stats
+        updateStatusIndicators();
+        
         document.getElementById('tradesCount').textContent = tradingState.tradesCount;
         document.getElementById('winRate').textContent = winRate.toFixed(1) + '%';
         document.getElementById('currentPair').textContent = tradingState.currentPair;
         document.getElementById('sessionActive').textContent = tradingState.sessionActive ? 'Yes' : 'No';
         document.getElementById('daysSinceBreak').textContent = tradingState.daysSinceBreak;
+
+        checkAlerts(drawdownPercent, dailyPnLPercent);
     }
 
-    function updateStatusIndicators(drawdownPercent) {
+    function updateStatusIndicators() {
         const marginStatus = document.getElementById('marginStatus');
         const riskStatus = document.getElementById('riskStatus');
         const sessionStatus = document.getElementById('sessionStatus');
 
         marginStatus.className = 'status-indicator status-safe';
-        document.getElementById('marginUsage').textContent = '10%';
+        document.getElementById('marginUsage').textContent = '15%';
 
         riskStatus.className = 'status-indicator status-safe';
         document.getElementById('riskPerTrade').textContent = '0.5%';
 
         sessionStatus.className = `status-indicator ${tradingState.sessionActive ? 'status-safe' : 'status-warning'}`;
-
-        checkAlerts(drawdownPercent);
     }
 
-    function checkAlerts(drawdownPercent) {
+    function checkAlerts(drawdownPercent, dailyPnLPercent) {
         const resultDiv = document.getElementById('calculationResult');
-        let alerts = '';
+        const existingAlerts = resultDiv.querySelectorAll('.alert');
+        existingAlerts.forEach(alert => {
+            if (alert.textContent.includes('MANDATORY') || alert.textContent.includes('WARNING') || alert.textContent.includes('TARGET')) {
+                alert.remove();
+            }
+        });
 
         if (drawdownPercent >= 5) {
-            alerts += '<div class="alert alert-danger">🛑 MANDATORY BREAK: 5% drawdown reached. Take minimum 1-week break!</div>';
+            showResult('danger', 'MANDATORY BREAK: 5% drawdown reached. Take minimum 1-week break!');
         } else if (drawdownPercent >= 3) {
-            alerts += '<div class="alert alert-warning">⚠️ WARNING: Approaching 5% drawdown limit</div>';
+            showResult('warning', 'WARNING: Approaching 5% drawdown limit');
         }
 
-        const dailyPnLPercent = ((tradingState.currentEquity - tradingState.dailyStartEquity) / tradingState.dailyStartEquity) * 100;
         if (dailyPnLPercent >= 1) {
-            alerts += '<div class="alert alert-success">🎯 TARGET ACHIEVED: 1% daily target reached. Consider exiting market!</div>';
+            showResult('success', 'TARGET ACHIEVED: 1% daily target reached. Consider exiting market!');
         }
+    }
+
+    function showResult(type, message) {
+        const resultDiv = document.getElementById('calculationResult');
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type}`;
+        alertDiv.textContent = message;
+        resultDiv.appendChild(alertDiv);
     }
 
     function calculatePosition() {
         const accountSize = parseFloat(document.getElementById('accountSize').value) || 10000;
         const riskPercent = parseFloat(document.getElementById('riskPercent').value) || 0.5;
         const entryPrice = parseFloat(document.getElementById('entryPrice').value) || 1.1650;
-        const exitPrice = parseFloat(document.getElementById('exitPrice').value) || 1.1600;
+        const stopLoss = parseFloat(document.getElementById('exitPrice').value) || 1.1600;
         const currencyPair = document.getElementById('currencyPair').value;
         const leverage = parseFloat(document.getElementById('leverage').value) || 100;
 
-        // Clear previous results
-        document.getElementById('calculationResult').innerHTML = '';
+        const resultDiv = document.getElementById('calculationResult');
+        const existingResults = resultDiv.querySelectorAll('.calculation-result');
+        existingResults.forEach(el => el.remove());
 
-        // Validation
-        if (entryPrice <= 0 || exitPrice <= 0) {
-            showResult('danger', '⚠️ Please enter valid entry and stop loss prices');
+        if (entryPrice <= 0 || stopLoss <= 0) {
+            showResult('danger', 'Please enter valid entry and stop loss prices');
             return;
         }
 
-        if (entryPrice === exitPrice) {
-            showResult('danger', '⚠️ Entry price and stop loss price cannot be the same');
+        if (entryPrice === stopLoss) {
+            showResult('danger', 'Entry price and stop loss price cannot be the same');
             return;
         }
+
+        if (riskPercent > 0.5) {
+            showResult('warning', 'Risk exceeds maximum 0.5% per trade rule');
+        }
+
+        const riskAmount = (riskPercent / 100) * accountSize;
+        const priceDifference = Math.abs(entryPrice - stopLoss);
+        const isLong = entryPrice > stopLoss;
+
+        let lotSize, marginRequired, pipsAtRisk, potentialProfit, profitPrice;
+
+        if (currencyPair.includes('JPY')) {
+            pipsAtRisk = priceDifference / 0.01;
+            lotSize = riskAmount / (pipsAtRisk * 10);
+            marginRequired = (lotSize * 100000 * entryPrice) / leverage;
+        } else if (currencyPair.startsWith('XAU') || currencyPair.startsWith('XAG')) {
+            pipsAtRisk = priceDifference;
+            lotSize = riskAmount / (pipsAtRisk * 100);
+            marginRequired = (lotSize * 100 * entryPrice) / leverage;
+        } else if (currencyPair.includes('BTC') || currencyPair.includes('ETH')) {
+            pipsAtRisk = priceDifference;
+            lotSize = riskAmount / priceDifference;
+            marginRequired = (lotSize * entryPrice) / leverage;
+        } else if (currencyPair.startsWith('US') || currencyPair.startsWith('UK')) {
+            pipsAtRisk = priceDifference;
+            lotSize = riskAmount / priceDifference;
+            marginRequired = (lotSize * entryPrice) / leverage;
+        } else {
+            pipsAtRisk = priceDifference / 0.0001;
+            lotSize = riskAmount / (pipsAtRisk * 10);
+            marginRequired = (lotSize * 100000 * entryPrice) / leverage;
+        }
+
+        const marginPercent = (marginRequired / accountSize) * 100;
+        potentialProfit = riskAmount;
+        profitPrice = isLong ? entryPrice + priceDifference : entryPrice - priceDifference;
+
+        if (marginPercent > 20) {
+            showResult('danger', 'MARGIN VIOLATION: Exceeds 20% maximum margin rule!');
+        }
+
+        const resultsHTML = `
+            <div class="calculation-result" style="background: rgba(0, 255, 157, 0.1); border: 1px solid rgba(0, 255, 157, 0.3); border-radius: 10px; padding: 20px; margin-top: 15px;">
+                <h4 style="color: #00ff9d; margin-bottom: 15px;">Position Calculation Results</h4>
+                <div class="metric-grid">
+                    <div class="metric">
+                        <span class="metric-label">Position Size</span>
+                        <span class="metric-value">${lotSize.toFixed(2)} lots</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Risk Amount</span>
+                        <span class="metric-value">$${riskAmount.toFixed(2)}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Margin Required</span>
+                        <span class="metric-value">$${marginRequired.toFixed(2)}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Margin %</span>
+                        <span class="metric-value" style="color: ${marginPercent > 20 ? '#ff3838' : '#00ff9d'}">${marginPercent.toFixed(2)}%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Potential Profit</span>
+                        <span class="metric-value">$${potentialProfit.toFixed(2)}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Take Profit Price</span>
+                        <span class="metric-value">${profitPrice.toFixed(4)}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Pips at Risk</span>
+                        <span class="metric-value">${pipsAtRisk.toFixed(1)}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Direction</span>
+                        <span class="metric-value">${isLong ? 'LONG' : 'SHORT'}</span>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; padding: 15px; background: rgba(0, 255, 157, 0.05); border-radius: 8px;">
+                    <h5 style="color: #00ff9d; margin-bottom: 10px;">Trade Summary</h5>
+                    <p style="margin-bottom: 5px; font-size: 0.9rem;">
+                        ${isLong ? 'BUY' : 'SELL'} ${lotSize.toFixed(2)} lots of ${currencyPair} at ${entryPrice.toFixed(4)}
+                    </p>
+                    <p style="margin-bottom: 5px; font-size: 0.9rem;">
+                        Stop Loss: ${stopLoss.toFixed(4)} | Take Profit: ${profitPrice.toFixed(4)}
+                    </p>
+                    <p style="font-size: 0.9rem;">
+                        Risk/Reward: $${riskAmount.toFixed(2)} / $${potentialProfit.toFixed(2)} (1:1 ratio)
+                    </p>
+                </div>
+            </div>
+        `;
+
+        resultDiv.insertAdjacentHTML('beforeend', resultsHTML);
+    }
+
+    function simulateTrade(isWin) {
+        const riskAmount = 50; // $50 per trade simulation
+        
+        tradingState.tradesCount++;
+        tradingState.sessionActive = true;
+        tradingState.currentPair = 'EUR/USD';
+        
+        if (isWin) {
+            tradingState.currentEquity += riskAmount;
+            tradingState.winCount++;
+            showResult('success', `Winning trade simulated: +$${riskAmount.toFixed(2)}`);
+        } else {
+            tradingState.currentEquity -= riskAmount;
+            showResult('danger', `Losing trade simulated: -$${riskAmount.toFixed(2)}`);
+        }
+        
+        updateDisplay();
+    }
+
+    function resetAccount() {
+        tradingState = {
+            startingCapital: 10000,
+            currentEquity: 10000,
+            dailyStartEquity: 10000,
+            tradesCount: 0,
+            winCount: 0,
+            currentPair: 'None',
+            sessionActive: false,
+            daysSinceBreak: 0
+        };
+        
+        const resultDiv = document.getElementById('calculationResult');
+        resultDiv.innerHTML = '';
+        
+        updateDisplay();
+        showResult('success', 'Account reset to starting values');
+    }
+
+    // Initialize display on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateDisplay();
+    });
+
+    // Auto-calculate on input change
+    document.getElementById('accountSize').addEventListener('input', calculatePosition);
+    document.getElementById('riskPercent').addEventListener('input', calculatePosition);
+    document.getElementById('entryPrice').addEventListener('input', calculatePosition);
+    document.getElementById('exitPrice').addEventListener('input', calculatePosition);
+    document.getElementById('leverage').addEventListener('change', calculatePosition);
+    document.getElementById('currencyPair').addEventListener('change', calculatePosition);
+</script>
 ```
+
+</body>
+</html>
