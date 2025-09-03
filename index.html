@@ -669,34 +669,67 @@
 
         const riskAmount = (riskPercent / 100) * accountSize;
         const priceDifference = Math.abs(entryPrice - stopLoss);
-        const isLong = entryPrice > stopLoss;
+        const isLong = entryPrice < stopLoss; // Fixed logic: Long if entry < stop loss
 
-        let lotSize, marginRequired, pipsAtRisk, potentialProfit, profitPrice;
+        let lotSize, marginRequired, pipsAtRisk, potentialProfit, profitPrice, contractSize, pipValue;
 
+        // FTMO-style calculations based on instrument type
         if (currencyPair.includes('JPY')) {
-            pipsAtRisk = priceDifference / 0.01;
-            lotSize = riskAmount / (pipsAtRisk * 10);
-            marginRequired = (lotSize * 100000 * entryPrice) / leverage;
-        } else if (currencyPair.startsWith('XAU') || currencyPair.startsWith('XAG')) {
+            // JPY pairs - pip = 0.01
+            contractSize = 100000;
+            pipsAtRisk = priceDifference * 100; // Convert to pips
+            pipValue = (contractSize * 0.01) / entryPrice; // USD value per pip for 1 lot
+            lotSize = riskAmount / (pipsAtRisk * pipValue);
+            marginRequired = (lotSize * contractSize * entryPrice) / leverage;
+        } else if (currencyPair.startsWith('XAU')) {
+            // Gold - pip = 0.1, contract size = 100 oz
+            contractSize = 100;
+            pipsAtRisk = priceDifference * 10;
+            pipValue = 1; // $1 per pip for 1 lot of gold
+            lotSize = riskAmount / (pipsAtRisk * pipValue);
+            marginRequired = (lotSize * contractSize * entryPrice) / leverage;
+        } else if (currencyPair.startsWith('XAG')) {
+            // Silver - pip = 0.01, contract size = 5000 oz
+            contractSize = 5000;
+            pipsAtRisk = priceDifference * 100;
+            pipValue = 5; // $5 per pip for 1 lot of silver
+            lotSize = riskAmount / (pipsAtRisk * pipValue);
+            marginRequired = (lotSize * contractSize * entryPrice) / leverage;
+        } else if (currencyPair.includes('BTC')) {
+            // Bitcoin - pip = 1, contract size = 1
+            contractSize = 1;
             pipsAtRisk = priceDifference;
-            lotSize = riskAmount / (pipsAtRisk * 100);
-            marginRequired = (lotSize * 100 * entryPrice) / leverage;
-        } else if (currencyPair.includes('BTC') || currencyPair.includes('ETH')) {
-            pipsAtRisk = priceDifference;
-            lotSize = riskAmount / priceDifference;
+            pipValue = 1; // $1 per pip
+            lotSize = riskAmount / pipsAtRisk;
             marginRequired = (lotSize * entryPrice) / leverage;
-        } else if (currencyPair.startsWith('US') || currencyPair.startsWith('UK')) {
+        } else if (currencyPair.startsWith('US') || currencyPair.startsWith('NAS') || currencyPair.startsWith('GER')) {
+            // Indices - pip = 1, contract size varies
+            contractSize = currencyPair === 'US30' ? 1 : (currencyPair === 'NAS100' ? 0.1 : 1);
             pipsAtRisk = priceDifference;
-            lotSize = riskAmount / priceDifference;
-            marginRequired = (lotSize * entryPrice) / leverage;
+            pipValue = contractSize; 
+            lotSize = riskAmount / pipsAtRisk;
+            marginRequired = (lotSize * entryPrice * contractSize) / leverage;
         } else {
-            pipsAtRisk = priceDifference / 0.0001;
-            lotSize = riskAmount / (pipsAtRisk * 10);
-            marginRequired = (lotSize * 100000 * entryPrice) / leverage;
+            // Major/Minor forex pairs - pip = 0.0001, contract size = 100,000
+            contractSize = 100000;
+            pipsAtRisk = priceDifference * 10000; // Convert to pips
+            
+            // Calculate pip value (depends if USD is base or quote)
+            if (currencyPair.startsWith('USD')) {
+                pipValue = (contractSize * 0.0001); // USD is base
+            } else {
+                pipValue = (contractSize * 0.0001) / entryPrice; // USD is quote
+            }
+            
+            lotSize = riskAmount / (pipsAtRisk * pipValue);
+            marginRequired = (lotSize * contractSize) / leverage; // For USD base pairs
+            if (!currencyPair.startsWith('USD')) {
+                marginRequired = (lotSize * contractSize * entryPrice) / leverage; // For other pairs
+            }
         }
 
         const marginPercent = (marginRequired / accountSize) * 100;
-        potentialProfit = riskAmount;
+        potentialProfit = riskAmount; // 1:1 RR
         profitPrice = isLong ? entryPrice + priceDifference : entryPrice - priceDifference;
 
         if (marginPercent > 20) {
