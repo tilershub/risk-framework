@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funded Trading Position Size Calculator</title>
+    <title>Position Size Calculator</title>
     <style>
         * {
             margin: 0;
@@ -14,213 +14,123 @@
 
 ```
     body {
-        font-family: 'Arial', sans-serif;
-        background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
-        color: #ffffff;
-        min-height: 100vh;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        background: #f8f9fa;
+        color: #333;
+        line-height: 1.6;
         padding: 20px;
     }
 
     .container {
-        max-width: 900px;
+        max-width: 600px;
         margin: 0 auto;
-        background: rgba(26, 26, 46, 0.8);
-        border: 1px solid rgba(0, 255, 157, 0.3);
-        border-radius: 15px;
-        padding: 30px;
-        backdrop-filter: blur(10px);
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        overflow: hidden;
     }
 
-    h1 {
+    .header {
+        background: #2563eb;
+        color: white;
+        padding: 24px;
         text-align: center;
-        color: #00ff9d;
-        margin-bottom: 30px;
-        font-size: 2rem;
     }
 
-    .calculator-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-        margin-bottom: 30px;
+    .header h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .form-section {
+        padding: 24px;
     }
 
     .input-group {
-        display: flex;
-        flex-direction: column;
+        margin-bottom: 20px;
     }
 
     .input-group label {
-        color: #cccccc;
+        display: block;
+        margin-bottom: 6px;
         font-weight: 500;
-        margin-bottom: 8px;
+        color: #374151;
     }
 
     .input-group input,
     .input-group select {
-        background: rgba(15, 15, 35, 0.9);
-        border: 1px solid rgba(0, 255, 157, 0.3);
-        border-radius: 8px;
+        width: 100%;
         padding: 12px;
-        color: #ffffff;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
         font-size: 16px;
-        transition: border-color 0.3s ease;
+        background: white;
+        transition: border-color 0.2s;
     }
 
     .input-group input:focus,
     .input-group select:focus {
         outline: none;
-        border-color: #00ff9d;
-        box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
 
-    .btn {
-        background: linear-gradient(135deg, #00ff9d 0%, #00d4aa 100%);
-        color: #0f0f23;
-        border: none;
-        padding: 15px 30px;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 16px;
-        cursor: pointer;
-        transition: transform 0.3s ease;
+    .calculate-btn {
         width: 100%;
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 14px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s;
     }
 
-    .btn:hover {
-        transform: translateY(-2px);
+    .calculate-btn:hover {
+        background: #1d4ed8;
     }
 
-    /* Results Styles */
-    .calculation-result {
-        background: rgba(15, 15, 35, 0.8);
-        border: 1px solid #00ff9d;
-        border-radius: 10px;
-        padding: 20px;
-        margin-top: 20px;
-        color: #ffffff;
-    }
-
-    .result-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-        margin: 20px 0;
+    .result-section {
+        background: #f9fafb;
+        border-top: 1px solid #e5e7eb;
+        padding: 24px;
     }
 
     .result-item {
         display: flex;
         justify-content: space-between;
-        padding: 12px;
-        background: rgba(0, 255, 157, 0.1);
-        border-radius: 5px;
-        border-left: 3px solid #00ff9d;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .result-item:last-child {
+        border-bottom: none;
     }
 
     .result-label {
         font-weight: 500;
-        color: #cccccc;
+        color: #374151;
     }
 
     .result-value {
         font-weight: 600;
-        color: #00ff9d;
+        color: #111827;
     }
 
-    .result-value.danger {
-        color: #ff4757;
+    .result-value.primary {
+        color: #2563eb;
+        font-size: 1.1rem;
     }
 
-    .result-value.profit {
-        color: #2ed573;
+    .result-value.success {
+        color: #059669;
     }
 
-    .direction.long {
-        color: #2ed573;
-        font-weight: bold;
-    }
-
-    .direction.short {
-        color: #ff4757;
-        font-weight: bold;
-    }
-
-    .warning-message {
-        background: rgba(255, 71, 87, 0.2);
-        border: 1px solid #ff4757;
-        color: #ff4757;
-        padding: 12px;
-        border-radius: 5px;
-        margin-bottom: 15px;
-        font-weight: 500;
-    }
-
-    .info-message {
-        background: rgba(0, 255, 157, 0.2);
-        border: 1px solid #00ff9d;
-        color: #00ff9d;
-        padding: 12px;
-        border-radius: 5px;
-        margin-bottom: 15px;
-        font-weight: 500;
-    }
-
-    .trade-summary {
-        margin-top: 20px;
-        padding: 20px;
-        background: rgba(0, 255, 157, 0.1);
-        border-radius: 8px;
-        border-left: 4px solid #00ff9d;
-    }
-
-    .trade-summary h5 {
-        color: #00ff9d;
-        margin-bottom: 10px;
-    }
-
-    .notification {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 15px 20px;
-        border-radius: 5px;
-        color: #fff;
-        font-weight: 500;
-        z-index: 9999;
-        transform: translateX(400px);
-        transition: transform 0.3s ease;
-        max-width: 300px;
-    }
-
-    .notification.success {
-        background: #2ed573;
-    }
-
-    .notification.error {
-        background: #ff4757;
-    }
-
-    .notification.warning {
-        background: #ffa502;
-    }
-
-    .funded-info {
-        background: rgba(0, 255, 157, 0.1);
-        border: 1px solid #00ff9d;
-        border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .funded-info h3 {
-        color: #00ff9d;
-        margin-bottom: 5px;
-    }
-
-    .funded-info p {
-        color: #cccccc;
-        font-size: 0.9rem;
+    .hidden {
+        display: none;
     }
 </style>
 ```
@@ -228,47 +138,24 @@
 </head>
 <body>
     <div class="container">
-        <div class="funded-info">
-            <h3>Funded Trading Position Size Calculator</h3>
-            <p>Professional risk management following funded account calculation standards</p>
+        <div class="header">
+            <h1>Position Size Calculator</h1>
         </div>
 
 ```
-    <div class="calculator-grid">
+    <div class="form-section">
         <div class="input-group">
             <label for="accountSize">Account Size ($)</label>
-            <input type="number" id="accountSize" placeholder="10000" value="10000">
+            <input type="number" id="accountSize" value="10000">
         </div>
         
         <div class="input-group">
             <label for="riskPercent">Risk Per Trade (%)</label>
-            <input type="number" id="riskPercent" placeholder="0.5" value="0.5" max="5" step="0.1">
+            <input type="number" id="riskPercent" value="0.5" step="0.1" max="5">
         </div>
         
         <div class="input-group">
-            <label for="entryPrice">Entry Price</label>
-            <input type="number" id="entryPrice" placeholder="2050.0" step="0.1" value="2050.0">
-        </div>
-        
-        <div class="input-group">
-            <label for="stopLoss">Stop Loss Price</label>
-            <input type="number" id="stopLoss" placeholder="2040.0" step="0.1" value="2040.0">
-        </div>
-
-        <div class="input-group">
-            <label for="riskReward">Risk:Reward Ratio</label>
-            <select id="riskReward">
-                <option value="0.5">1:0.5</option>
-                <option value="1" selected>1:1</option>
-                <option value="1.5">1:1.5</option>
-                <option value="2">1:2</option>
-                <option value="2.5">1:2.5</option>
-                <option value="3">1:3</option>
-            </select>
-        </div>
-        
-        <div class="input-group">
-            <label for="currencyPair">Currency Pair</label>
+            <label for="currencyPair">Instrument</label>
             <select id="currencyPair">
                 <optgroup label="Major Pairs">
                     <option value="EURUSD">EUR/USD</option>
@@ -310,676 +197,231 @@
                 </optgroup>
             </select>
         </div>
+        
+        <div class="input-group">
+            <label for="entryPrice">Entry Price</label>
+            <input type="number" id="entryPrice" value="2050.0" step="0.1">
+        </div>
+        
+        <div class="input-group">
+            <label for="stopLoss">Stop Loss Price</label>
+            <input type="number" id="stopLoss" value="2040.0" step="0.1">
+        </div>
+
+        <div class="input-group">
+            <label for="riskReward">Risk:Reward Ratio</label>
+            <select id="riskReward">
+                <option value="0.5">1:0.5</option>
+                <option value="1" selected>1:1</option>
+                <option value="1.5">1:1.5</option>
+                <option value="2">1:2</option>
+                <option value="2.5">1:2.5</option>
+                <option value="3">1:3</option>
+            </select>
+        </div>
+        
+        <button class="calculate-btn" id="calculateBtn">Calculate Position Size</button>
     </div>
     
-    <button class="btn" id="calculateBtn">Calculate Position Size</button>
-    
-    <div id="calculationResult"></div>
+    <div id="resultSection" class="result-section hidden">
+        <div class="result-item">
+            <span class="result-label">Position Size</span>
+            <span id="positionSize" class="result-value primary">-</span>
+        </div>
+        <div class="result-item">
+            <span class="result-label">Risk Amount</span>
+            <span id="riskAmount" class="result-value">-</span>
+        </div>
+        <div class="result-item">
+            <span class="result-label">Potential Profit</span>
+            <span id="potentialProfit" class="result-value success">-</span>
+        </div>
+        <div class="result-item">
+            <span class="result-label">Take Profit</span>
+            <span id="takeProfit" class="result-value">-</span>
+        </div>
+    </div>
 </div>
 
 <script>
-    class FundedTradingCalculator {
+    class PositionCalculator {
         constructor() {
-            // Funded trading account specifications with accurate contract sizes
-            this.instrumentConfig = {
+            this.instruments = {
                 // Major Forex Pairs
-                'EURUSD': { 
-                    contractSize: 100000, 
-                    pipSize: 0.0001, 
-                    pipPosition: 4,
-                    type: 'forex'
-                },
-                'GBPUSD': { 
-                    contractSize: 100000, 
-                    pipSize: 0.0001, 
-                    pipPosition: 4,
-                    type: 'forex'
-                },
-                'USDJPY': { 
-                    contractSize: 100000, 
-                    pipSize: 0.01, 
-                    pipPosition: 2,
-                    type: 'forex'
-                },
-                'USDCHF': { 
-                    contractSize: 100000, 
-                    pipSize: 0.0001, 
-                    pipPosition: 4,
-                    type: 'forex'
-                },
-                'AUDUSD': { 
-                    contractSize: 100000, 
-                    pipSize: 0.0001, 
-                    pipPosition: 4,
-                    type: 'forex'
-                },
-                'NZDUSD': { 
-                    contractSize: 100000, 
-                    pipSize: 0.0001, 
-                    pipPosition: 4,
-                    type: 'forex'
-                },
-                'USDCAD': { 
-                    contractSize: 100000, 
-                    pipSize: 0.0001, 
-                    pipPosition: 4,
-                    type: 'forex'
-                },
+                'EURUSD': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                'GBPUSD': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                'USDJPY': { contractSize: 100000, pipSize: 0.01, type: 'forex' },
+                'USDCHF': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                'AUDUSD': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                'NZDUSD': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                'USDCAD': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
                 
                 // Minor Pairs
-                'EURGBP': { 
-                    contractSize: 100000, 
-                    pipSize: 0.0001, 
-                    pipPosition: 4,
-                    type: 'forex'
-                },
-                'EURJPY': { 
-                    contractSize: 100000, 
-                    pipSize: 0.01, 
-                    pipPosition: 2,
-                    type: 'forex'
-                },
-                'EURCHF': { 
-                    contractSize: 100000, 
-                    pipSize: 0.0001, 
-                    pipPosition: 4,
-                    type: 'forex'
-                },
-                'GBPJPY': { 
-                    contractSize: 100000, 
-                    pipSize: 0.01, 
-                    pipPosition: 2,
-                    type: 'forex'
-                },
-                'GBPCHF': { 
-                    contractSize: 100000, 
-                    pipSize: 0.0001, 
-                    pipPosition: 4,
-                    type: 'forex'
-                },
-                'AUDJPY': { 
-                    contractSize: 100000, 
-                    pipSize: 0.01, 
-                    pipPosition: 2,
-                    type: 'forex'
-                },
-                'AUDCHF': { 
-                    contractSize: 100000, 
-                    pipSize: 0.0001, 
-                    pipPosition: 4,
-                    type: 'forex'
-                },
-                'NZDJPY': { 
-                    contractSize: 100000, 
-                    pipSize: 0.01, 
-                    pipPosition: 2,
-                    type: 'forex'
-                },
-                'NZDCHF': { 
-                    contractSize: 100000, 
-                    pipSize: 0.0001, 
-                    pipPosition: 4,
-                    type: 'forex'
-                },
-                'CHFJPY': { 
-                    contractSize: 100000, 
-                    pipSize: 0.01, 
-                    pipPosition: 2,
-                    type: 'forex'
-                },
+                'EURGBP': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                'EURJPY': { contractSize: 100000, pipSize: 0.01, type: 'forex' },
+                'EURCHF': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                'GBPJPY': { contractSize: 100000, pipSize: 0.01, type: 'forex' },
+                'GBPCHF': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                'AUDJPY': { contractSize: 100000, pipSize: 0.01, type: 'forex' },
+                'AUDCHF': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                'NZDJPY': { contractSize: 100000, pipSize: 0.01, type: 'forex' },
+                'NZDCHF': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                'CHFJPY': { contractSize: 100000, pipSize: 0.01, type: 'forex' },
                 
                 // Commodities
-                'XAUUSD': { 
-                    contractSize: 100, 
-                    pipSize: 0.1, 
-                    pipPosition: 1,
-                    type: 'commodity'
-                },
-                'XAGUSD': { 
-                    contractSize: 5000, 
-                    pipSize: 0.01, 
-                    pipPosition: 2,
-                    type: 'commodity'
-                },
-                'USOIL': { 
-                    contractSize: 1000, 
-                    pipSize: 0.01, 
-                    pipPosition: 2,
-                    type: 'commodity'
-                },
-                'UKOIL': { 
-                    contractSize: 1000, 
-                    pipSize: 0.01, 
-                    pipPosition: 2,
-                    type: 'commodity'
-                },
+                'XAUUSD': { contractSize: 100, pipSize: 0.1, type: 'commodity' },
+                'XAGUSD': { contractSize: 5000, pipSize: 0.01, type: 'commodity' },
+                'USOIL': { contractSize: 1000, pipSize: 0.01, type: 'commodity' },
+                'UKOIL': { contractSize: 1000, pipSize: 0.01, type: 'commodity' },
                 
                 // Indices
-                'US30': { 
-                    contractSize: 1, 
-                    pipSize: 1, 
-                    pipPosition: 0,
-                    type: 'index'
-                },
-                'US500': { 
-                    contractSize: 1, 
-                    pipSize: 1, 
-                    pipPosition: 0,
-                    type: 'index'
-                },
-                'NAS100': { 
-                    contractSize: 1, 
-                    pipSize: 1, 
-                    pipPosition: 0,
-                    type: 'index'
-                },
-                'UK100': { 
-                    contractSize: 1, 
-                    pipSize: 1, 
-                    pipPosition: 0,
-                    type: 'index'
-                },
-                'GER40': { 
-                    contractSize: 1, 
-                    pipSize: 1, 
-                    pipPosition: 0,
-                    type: 'index'
-                },
+                'US30': { contractSize: 1, pipSize: 1, type: 'index' },
+                'US500': { contractSize: 1, pipSize: 1, type: 'index' },
+                'NAS100': { contractSize: 1, pipSize: 1, type: 'index' },
+                'UK100': { contractSize: 1, pipSize: 1, type: 'index' },
+                'GER40': { contractSize: 1, pipSize: 1, type: 'index' },
                 
                 // Crypto
-                'BTCUSD': { 
-                    contractSize: 1, 
-                    pipSize: 1, 
-                    pipPosition: 0,
-                    type: 'crypto'
-                },
-                'ETHUSD': { 
-                    contractSize: 1, 
-                    pipSize: 1, 
-                    pipPosition: 0,
-                    type: 'crypto'
-                }
+                'BTCUSD': { contractSize: 1, pipSize: 1, type: 'crypto' },
+                'ETHUSD': { contractSize: 1, pipSize: 1, type: 'crypto' }
             };
 
-            // Current exchange rates for accurate cross-pair calculations (simplified)
             this.exchangeRates = {
-                'EURUSD': 1.0950,
-                'GBPUSD': 1.2750,
-                'USDJPY': 148.50,
-                'USDCHF': 0.8750,
-                'AUDUSD': 0.6750,
-                'NZDUSD': 0.6150,
-                'USDCAD': 1.3550,
-                'EURGBP': 0.8550,
-                'CHFJPY': 169.50
+                'EURUSD': 1.0950, 'GBPUSD': 1.2750, 'USDJPY': 148.50,
+                'USDCHF': 0.8750, 'AUDUSD': 0.6750, 'NZDUSD': 0.6150, 'USDCAD': 1.3550
             };
         }
 
-        calculate(params) {
-            const { accountSize, riskPercent, entryPrice, stopLoss, currencyPair, riskReward } = params;
-            
-            if (!this.validateInputs(params)) {
-                throw new Error('Invalid input parameters');
+        calculatePipValue(pair, entryPrice, config) {
+            const quote = pair.substring(3, 6);
+            const base = pair.substring(0, 3);
+
+            // USD quoted pairs
+            if (quote === 'USD') return 10;
+
+            // JPY pairs
+            if (quote === 'JPY') {
+                const usdJpyRate = this.exchangeRates['USDJPY'] || 148.50;
+                const pipValueJPY = config.contractSize * config.pipSize;
+                return pipValueJPY / usdJpyRate;
             }
 
-            const config = this.instrumentConfig[currencyPair];
-            if (!config) {
-                throw new Error('Unsupported currency pair');
+            // USD base pairs
+            if (base === 'USD') {
+                return (config.contractSize * config.pipSize) / entryPrice;
             }
+
+            // Cross pairs - simplified for major currencies
+            const rates = {
+                'CHF': 1 / (this.exchangeRates['USDCHF'] || 0.8750),
+                'EUR': this.exchangeRates['EURUSD'] || 1.0950,
+                'GBP': this.exchangeRates['GBPUSD'] || 1.2750,
+                'AUD': this.exchangeRates['AUDUSD'] || 0.6750,
+                'NZD': this.exchangeRates['NZDUSD'] || 0.6150,
+                'CAD': 1 / (this.exchangeRates['USDCAD'] || 1.3550)
+            };
+
+            const baseRate = rates[base] || 1;
+            const quoteRate = rates[quote] || 1;
+
+            if (quote === 'CHF' || quote === 'CAD') {
+                return (config.contractSize * config.pipSize) / quoteRate;
+            } else {
+                return (config.contractSize * config.pipSize) * quoteRate;
+            }
+        }
+
+        calculate(params) {
+            const { accountSize, riskPercent, entryPrice, stopLoss, pair, riskReward } = params;
+            const config = this.instruments[pair];
+            
+            if (!config) throw new Error('Unsupported instrument');
 
             const riskAmount = (riskPercent / 100) * accountSize;
-            const priceDifference = Math.abs(entryPrice - stopLoss);
+            const priceDiff = Math.abs(entryPrice - stopLoss);
+            const pipsAtRisk = priceDiff / config.pipSize;
+            const pipValue = this.calculatePipValue(pair, entryPrice, config);
             
-            // Determine trade direction
+            let lotSize = riskAmount / (pipsAtRisk * pipValue);
+            lotSize = Math.max(0.01, Math.round(lotSize * 100) / 100); // Round to 2 decimals, min 0.01
+
             const isLong = stopLoss < entryPrice;
-
-            // Calculate pips at risk
-            const pipsAtRisk = this.calculatePipsAtRisk(priceDifference, config);
-            
-            // Calculate pip value in USD using correct methodology
-            const pipValue = this.calculatePipValueUSD(currencyPair, entryPrice, config);
-            
-            if (pipValue <= 0 || isNaN(pipValue)) {
-                throw new Error(`Invalid pip value calculation for ${currencyPair}`);
-            }
-
-            // Calculate position size: Risk Amount / (Pips at Risk × Pip Value)
-            const lotSize = riskAmount / (pipsAtRisk * pipValue);
-            
-            // Calculate margin required
-            const marginRequired = this.calculateMargin(lotSize, entryPrice, config, currencyPair);
-            const marginPercent = (marginRequired / accountSize) * 100;
-            
-            // Calculate take profit
-            const profitDistance = priceDifference * parseFloat(riskReward);
+            const profitDistance = priceDiff * parseFloat(riskReward);
             const takeProfitPrice = isLong ? entryPrice + profitDistance : entryPrice - profitDistance;
             const potentialProfit = riskAmount * parseFloat(riskReward);
 
             return {
-                lotSize: Number(lotSize.toFixed(4)),
-                riskAmount: Number(riskAmount.toFixed(2)),
-                marginRequired: Number(marginRequired.toFixed(2)),
-                marginPercent: Number(marginPercent.toFixed(2)),
-                potentialProfit: Number(potentialProfit.toFixed(2)),
-                takeProfitPrice: Number(takeProfitPrice.toFixed(this.getPricePrecision(currencyPair))),
-                pipsAtRisk: Number(pipsAtRisk.toFixed(1)),
-                pipValue: Number(pipValue.toFixed(4)),
-                isLong,
-                direction: isLong ? 'LONG' : 'SHORT',
-                currencyPair,
-                entryPrice,
-                stopLoss,
-                leverage: config.leverage,
-                accountSize,
-                riskReward: parseFloat(riskReward),
-                instrumentType: config.type
+                lotSize: lotSize,
+                riskAmount,
+                potentialProfit,
+                takeProfitPrice: parseFloat(takeProfitPrice.toFixed(this.getPricePrecision(pair)))
             };
         }
 
-        calculatePipsAtRisk(priceDifference, config) {
-            return priceDifference / config.pipSize;
-        }
-
-        calculatePipValueUSD(currencyPair, entryPrice, config) {
-            const base = currencyPair.substring(0, 3);
-            const quote = currencyPair.substring(3, 6);
-
-            // 1. USD-Quoted Majors (EURUSD, GBPUSD, AUDUSD, etc.)
-            if (quote === 'USD') {
-                return 10; // Fixed $10 per standard lot for all USD-quoted pairs
-            }
-
-            // 2. JPY Pairs (USDJPY, EURJPY, CHFJPY, etc.)
-            if (quote === 'JPY') {
-                // One pip = 0.01, Standard lot = 100,000
-                // Pip value in JPY = 100,000 × 0.01 = 1,000 JPY
-                // Convert to USD using USDJPY rate
-                const usdJpyRate = this.exchangeRates['USDJPY'] || 148.50;
-                const pipValueJPY = config.contractSize * config.pipSize; // 1,000 JPY for standard lot
-                return pipValueJPY / usdJpyRate; // ~$6.67 at USDJPY = 150
-            }
-
-            // 3. USD Base Pairs (USDCHF, USDCAD, etc.)
-            if (base === 'USD') {
-                // Pip value in quote currency, need to convert to USD
-                const pipValueInQuoteCurrency = config.contractSize * config.pipSize;
-                return pipValueInQuoteCurrency / entryPrice;
-            }
-
-            // 4. Cross Pairs without USD (EURCHF, EURGBP, AUDCAD, etc.)
-            // Pip value is in quote currency, convert to USD
-            if (quote === 'CHF') {
-                const pipValueCHF = config.contractSize * config.pipSize; // 10 CHF for standard lot
-                const usdChfRate = this.exchangeRates['USDCHF'] || 0.8750;
-                return pipValueCHF / usdChfRate; // ~$11.43 when USDCHF = 0.8750
-            }
-
-            if (quote === 'GBP') {
-                const pipValueGBP = config.contractSize * config.pipSize;
-                const gbpUsdRate = this.exchangeRates['GBPUSD'] || 1.2750;
-                return pipValueGBP * gbpUsdRate;
-            }
-
-            if (quote === 'EUR') {
-                const pipValueEUR = config.contractSize * config.pipSize;
-                const eurUsdRate = this.exchangeRates['EURUSD'] || 1.0950;
-                return pipValueEUR * eurUsdRate;
-            }
-
-            if (quote === 'AUD') {
-                const pipValueAUD = config.contractSize * config.pipSize;
-                const audUsdRate = this.exchangeRates['AUDUSD'] || 0.6750;
-                return pipValueAUD * audUsdRate;
-            }
-
-            if (quote === 'NZD') {
-                const pipValueNZD = config.contractSize * config.pipSize;
-                const nzdUsdRate = this.exchangeRates['NZDUSD'] || 0.6150;
-                return pipValueNZD * nzdUsdRate;
-            }
-
-            if (quote === 'CAD') {
-                const pipValueCAD = config.contractSize * config.pipSize;
-                const usdCadRate = this.exchangeRates['USDCAD'] || 1.3550;
-                return pipValueCAD / usdCadRate;
-            }
-
-            // 5. Gold (XAUUSD) - $1 move = $100 per lot
-            if (currencyPair === 'XAUUSD') {
-                return config.contractSize * config.pipSize; // 100 × 0.1 = $10 per $0.10 move
-            }
-
-            // 6. Silver (XAGUSD) - $0.01 move = $50 per lot  
-            if (currencyPair === 'XAGUSD') {
-                return config.contractSize * config.pipSize; // 5000 × 0.01 = $50
-            }
-
-            // 7. Oil contracts
-            if (currencyPair === 'USOIL' || currencyPair === 'UKOIL') {
-                return config.contractSize * config.pipSize; // 1000 × 0.01 = $10 per $0.01 move
-            }
-
-            // 8. Indices - broker-defined contract specs
-            if (config.type === 'index') {
-                return config.contractSize * config.pipSize; // Varies by index
-            }
-
-            // 9. Crypto - contract size varies by broker
-            if (config.type === 'crypto') {
-                return config.contractSize * config.pipSize;
-            }
-
-            // Default fallback
-            return config.contractSize * config.pipSize;
-        }
-
-        calculateMargin(lotSize, entryPrice, config, currencyPair) {
-            const notionalValue = lotSize * config.contractSize;
-            
-            if (config.type === 'forex') {
-                // For USD base pairs
-                if (currencyPair.startsWith('USD')) {
-                    return (notionalValue * entryPrice) / config.leverage;
-                } else {
-                    // For other forex pairs, convert to USD
-                    return (notionalValue * entryPrice) / config.leverage;
-                }
-            } else {
-                // For commodities, indices, crypto
-                return (notionalValue * entryPrice) / config.leverage;
-            }
-        }
-
-        validateInputs({ accountSize, riskPercent, entryPrice, stopLoss, currencyPair, riskReward }) {
-            return accountSize > 0 && 
-                   riskPercent > 0 && 
-                   riskPercent <= 10 &&
-                   entryPrice > 0 && 
-                   stopLoss > 0 && 
-                   entryPrice !== stopLoss &&
-                   currencyPair && 
-                   typeof currencyPair === 'string' &&
-                   riskReward > 0;
-        }
-
-        getPricePrecision(currencyPair) {
-            const config = this.instrumentConfig[currencyPair];
-            if (!config) return 5;
-            
-            if (config.pipPosition === 2) return 2;  // JPY pairs
-            if (config.pipPosition === 4) return 5;  // Most forex
-            if (config.pipPosition === 1) return 1;  // Gold
-            return 0; // Indices, crypto
-        }
-
-        getInstrumentInfo(currencyPair) {
-            return this.instrumentConfig[currencyPair] || null;
+        getPricePrecision(pair) {
+            const config = this.instruments[pair];
+            if (pair.includes('JPY')) return 2;
+            if (config.type === 'commodity' && pair === 'XAUUSD') return 1;
+            if (config.type === 'index' || config.type === 'crypto') return 0;
+            return 5;
         }
     }
 
-    // Initialize calculator
-    const calculator = new FundedTradingCalculator();
+    const calculator = new PositionCalculator();
 
-    // Event handlers
-    document.getElementById('calculateBtn').addEventListener('click', calculatePosition);
-
-    function calculatePosition() {
+    document.getElementById('calculateBtn').addEventListener('click', function() {
         try {
-            const params = getFormData();
-            
-            if (!params) {
-                showNotification('Please fill in all required fields', 'error');
-                return;
-            }
+            const params = {
+                accountSize: parseFloat(document.getElementById('accountSize').value),
+                riskPercent: parseFloat(document.getElementById('riskPercent').value),
+                entryPrice: parseFloat(document.getElementById('entryPrice').value),
+                stopLoss: parseFloat(document.getElementById('stopLoss').value),
+                pair: document.getElementById('currencyPair').value,
+                riskReward: document.getElementById('riskReward').value
+            };
 
-            console.log('Calculating with params:', params);
             const result = calculator.calculate(params);
-            console.log('Calculation result:', result);
-            displayResult(result);
-
-        } catch (error) {
-            console.error('Calculation error:', error);
-            showNotification(`Calculation error: ${error.message}`, 'error');
             
-            // Show debug info in console
-            const params = getFormData();
-            console.log('Debug - Input params:', params);
-            if (params) {
-                const config = calculator.getInstrumentInfo(params.currencyPair);
-                console.log('Debug - Instrument config:', config);
-            }
-        }
-    }
-
-    function getFormData() {
-        const accountSize = parseFloat(document.getElementById('accountSize').value);
-        const riskPercent = parseFloat(document.getElementById('riskPercent').value);
-        const entryPrice = parseFloat(document.getElementById('entryPrice').value);
-        const stopLoss = parseFloat(document.getElementById('stopLoss').value);
-        const currencyPair = document.getElementById('currencyPair').value;
-        const riskReward = document.getElementById('riskReward').value;
-
-        if (!accountSize || !riskPercent || !entryPrice || !stopLoss || !currencyPair || !riskReward) {
-            return null;
-        }
-
-        if (accountSize <= 0 || riskPercent <= 0 || entryPrice <= 0 || stopLoss <= 0) {
-            return null;
-        }
-
-        if (entryPrice === stopLoss) {
-            throw new Error('Entry price and stop loss cannot be the same');
-        }
-
-        return {
-            accountSize,
-            riskPercent,
-            entryPrice,
-            stopLoss,
-            currencyPair,
-            riskReward
-        };
-    }
-
-    function displayResult(result) {
-        const resultContainer = document.getElementById('calculationResult');
-
-        // Risk warnings
-        const riskWarning = result.riskPercent > 2 ? 
-            '<div class="warning-message">⚠️ Funded accounts recommend maximum 1-2% risk per trade!</div>' : '';
-
-        resultContainer.innerHTML = `
-            <div class="calculation-result">
-                <h4>Funded Trading Position Calculation</h4>
-                ${riskWarning}
-                
-                <div class="result-grid">
-                    <div class="result-item">
-                        <span class="result-label">Direction:</span>
-                        <span class="result-value direction ${result.direction.toLowerCase()}">${result.direction}</span>
-                    </div>
-                    
-                    <div class="result-item">
-                        <span class="result-label">Position Size:</span>
-                        <span class="result-value">${result.lotSize} lots</span>
-                    </div>
-                    
-                    <div class="result-item">
-                        <span class="result-label">Risk Amount:</span>
-                        <span class="result-value">$${result.riskAmount}</span>
-                    </div>
-                    
-                    <div class="result-item">
-                        <span class="result-label">Pips at Risk:</span>
-                        <span class="result-value">${result.pipsAtRisk} pips</span>
-                    </div>
-                    
-                    <div class="result-item">
-                        <span class="result-label">Pip Value:</span>
-                        <span class="result-value">$${result.pipValue}</span>
-                    </div>
-                    
-                    <div class="result-item">
-                        <span class="result-label">Risk:Reward:</span>
-                        <span class="result-value">1:${result.riskReward}</span>
-                    </div>
-                    
-                    <div class="result-item">
-                        <span class="result-label">Potential Profit:</span>
-                        <span class="result-value profit">$${result.potentialProfit}</span>
-                    </div>
-                    
-                    <div class="result-item">
-                        <span class="result-label">Take Profit:</span>
-                        <span class="result-value">${result.takeProfitPrice}</span>
-                    </div>
-                </div>
-                
-                <div class="trade-summary">
-                    <h5>Funded Trading Setup</h5>
-                    <p><strong>Entry:</strong> ${result.entryPrice}</p>
-                    <p><strong>Stop Loss:</strong> ${result.stopLoss} (-${result.pipsAtRisk} pips)</p>
-                    <p><strong>Take Profit:</strong> ${result.takeProfitPrice} (+${(result.pipsAtRisk * result.riskReward).toFixed(1)} pips)</p>
-                    <p><strong>Risk:Reward:</strong> 1:${result.riskReward} | <strong>Instrument:</strong> ${result.currencyPair} (${result.instrumentType})</p>
-                </div>
-            </div>
-        `;
-
-        showNotification('Position calculated successfully using funded trading standards!', 'success');
-    }
-
-    function showNotification(message, type = 'info') {
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        notification.textContent = message;
-        
-        document.body.appendChild(notification);
-
-        setTimeout(() => {
-            notification.style.transform = 'translateX(0)';
-        }, 10);
-
-        setTimeout(() => {
-            notification.style.transform = 'translateX(400px)';
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.parentNode.removeChild(notification);
-                }
-            }, 300);
-        }, 4000);
-    }
-
-    // Input validation with funded trading standards
-    document.getElementById('riskPercent').addEventListener('input', function(e) {
-        const value = parseFloat(e.target.value);
-        if (value > 2) {
-            e.target.style.borderColor = '#ff4757';
-            showNotification('Funded accounts recommend max 2% risk per trade!', 'warning');
-        } else if (value > 5) {
-            e.target.style.borderColor = '#ff4757';
-            showNotification('Excessive risk! Funded accounts have strict risk limits.', 'error');
-        } else {
-            e.target.style.borderColor = '';
+            document.getElementById('positionSize').textContent = result.lotSize.toFixed(2) + ' lots';
+            document.getElementById('riskAmount').textContent = '$' + result.riskAmount.toFixed(2);
+            document.getElementById('potentialProfit').textContent = '$' + result.potentialProfit.toFixed(2);
+            document.getElementById('takeProfit').textContent = result.takeProfitPrice;
+            
+            document.getElementById('resultSection').classList.remove('hidden');
+            
+        } catch (error) {
+            alert('Calculation error: ' + error.message);
         }
     });
 
-    // Auto-update example prices based on currency pair with accurate values
+    // Auto-update prices when instrument changes
     document.getElementById('currencyPair').addEventListener('change', function(e) {
         const pair = e.target.value;
         const entryInput = document.getElementById('entryPrice');
         const stopInput = document.getElementById('stopLoss');
         
-        // Set realistic prices for each pair
-        switch(pair) {
-            case 'EURUSD':
-                entryInput.value = '1.09500';
-                stopInput.value = '1.09000';
-                break;
-            case 'GBPUSD':
-                entryInput.value = '1.27500';
-                stopInput.value = '1.27000';
-                break;
-            case 'USDJPY':
-                entryInput.value = '148.50';
-                stopInput.value = '148.00';
-                break;
-            case 'USDCHF':
-                entryInput.value = '0.87500';
-                stopInput.value = '0.87000';
-                break;
-            case 'AUDUSD':
-                entryInput.value = '0.67500';
-                stopInput.value = '0.67000';
-                break;
-            case 'NZDUSD':
-                entryInput.value = '0.61500';
-                stopInput.value = '0.61000';
-                break;
-            case 'USDCAD':
-                entryInput.value = '1.35500';
-                stopInput.value = '1.36000';
-                break;
-            case 'EURGBP':
-                entryInput.value = '0.85500';
-                stopInput.value = '0.85000';
-                break;
-            case 'EURJPY':
-                entryInput.value = '162.50';
-                stopInput.value = '162.00';
-                break;
-            case 'GBPJPY':
-                entryInput.value = '189.50';
-                stopInput.value = '189.00';
-                break;
-            case 'CHFJPY':
-                entryInput.value = '184';
-                stopInput.value = '184.5';
-                break;
-            case 'XAUUSD':
-                entryInput.value = '2050.0';
-                stopInput.value = '2040.0';
-                break;
-            case 'XAGUSD':
-                entryInput.value = '24.50';
-                stopInput.value = '24.00';
-                break;
-            case 'USOIL':
-                entryInput.value = '75.50';
-                stopInput.value = '74.50';
-                break;
-            case 'US30':
-                entryInput.value = '35000';
-                stopInput.value = '34900';
-                break;
-            case 'US500':
-                entryInput.value = '4500';
-                stopInput.value = '4480';
-                break;
-            case 'NAS100':
-                entryInput.value = '15500';
-                stopInput.value = '15450';
-                break;
-            case 'BTCUSD':
-                entryInput.value = '43000';
-                stopInput.value = '42500';
-                break;
-            case 'ETHUSD':
-                entryInput.value = '2500';
-                stopInput.value = '2450';
-                break;
+        const prices = {
+            'EURUSD': [1.0950, 1.0900], 'GBPUSD': [1.2750, 1.2700],
+            'USDJPY': [148.50, 148.00], 'USDCHF': [0.8750, 0.8700],
+            'AUDUSD': [0.6750, 0.6700], 'NZDUSD': [0.6150, 0.6100],
+            'USDCAD': [1.3550, 1.3600], 'EURGBP': [0.8550, 0.8500],
+            'EURJPY': [162.50, 162.00], 'GBPJPY': [189.50, 189.00],
+            'CHFJPY': [184.00, 184.50], 'XAUUSD': [2050.0, 2040.0],
+            'XAGUSD': [24.50, 24.00], 'USOIL': [75.50, 74.50],
+            'US30': [35000, 34900], 'US500': [4500, 4480],
+            'NAS100': [15500, 15450], 'BTCUSD': [43000, 42500],
+            'ETHUSD': [2500, 2450]
+        };
+        
+        if (prices[pair]) {
+            entryInput.value = prices[pair][0];
+            stopInput.value = prices[pair][1];
         }
     });
 
-    // Initialize with default XAU/USD values
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('Funded Trading Position Calculator loaded');
-        // Auto-calculate on page load for demo
-        setTimeout(() => {
-            if (document.getElementById('entryPrice').value && 
-                document.getElementById('stopLoss').value) {
-                calculatePosition();
-            }
-        }, 500);
+    // Auto-calculate on page load
+    window.addEventListener('load', function() {
+        document.getElementById('calculateBtn').click();
     });
 </script>
 ```
