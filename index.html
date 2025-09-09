@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Position Size Calculator</title>
+    <title>TradeMaster Pro - Professional Trading Education & Tools</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,419 +12,1066 @@
             box-sizing: border-box;
         }
 
-```
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-        background: #f8f9fa;
-        color: #333;
-        line-height: 1.6;
-        padding: 20px;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
 
-    .container {
-        max-width: 600px;
-        margin: 0 auto;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        overflow: hidden;
-    }
+        /* Navigation */
+        .navbar {
+            background: #1a1a2e;
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-    .header {
-        background: #2563eb;
-        color: white;
-        padding: 24px;
-        text-align: center;
-    }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
 
-    .header h1 {
-        font-size: 1.5rem;
-        font-weight: 600;
-    }
+        .logo {
+            color: #00d4ff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
 
-    .form-section {
-        padding: 24px;
-    }
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
 
-    .input-group {
-        margin-bottom: 20px;
-    }
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
 
-    .input-group label {
-        display: block;
-        margin-bottom: 6px;
-        font-weight: 500;
-        color: #374151;
-    }
+        .nav-link:hover {
+            color: #00d4ff;
+        }
 
-    .input-group input,
-    .input-group select {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #d1d5db;
-        border-radius: 8px;
-        font-size: 16px;
-        background: white;
-        transition: border-color 0.2s;
-    }
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+        }
 
-    .input-group input:focus,
-    .input-group select:focus {
-        outline: none;
-        border-color: #2563eb;
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    }
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
 
-    .calculate-btn {
-        width: 100%;
-        background: #2563eb;
-        color: white;
-        border: none;
-        padding: 14px;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    .calculate-btn:hover {
-        background: #1d4ed8;
-    }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
 
-    .result-section {
-        background: #f9fafb;
-        border-top: 1px solid #e5e7eb;
-        padding: 24px;
-    }
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
 
-    .result-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 12px 0;
-        border-bottom: 1px solid #e5e7eb;
-    }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
 
-    .result-item:last-child {
-        border-bottom: none;
-    }
+        .btn-primary {
+            background: #00d4ff;
+            color: #1a1a2e;
+        }
 
-    .result-label {
-        font-weight: 500;
-        color: #374151;
-    }
+        .btn-primary:hover {
+            background: #0099cc;
+            transform: translateY(-2px);
+        }
 
-    .result-value {
-        font-weight: 600;
-        color: #111827;
-    }
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid #00d4ff;
+        }
 
-    .result-value.primary {
-        color: #2563eb;
-        font-size: 1.1rem;
-    }
+        .btn-secondary:hover {
+            background: #00d4ff;
+            color: #1a1a2e;
+        }
 
-    .result-value.success {
-        color: #059669;
-    }
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
 
-    .hidden {
-        display: none;
-    }
-</style>
-```
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
 
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Blog Section */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1a1a2e;
+        }
+
+        .blog-excerpt {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* Calculator Section */
+        .calculator-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+
+        .calculator-header {
+            background: #1a1a2e;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .calculator-form {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+
+        .calculate-btn {
+            grid-column: 1 / -1;
+            background: #00d4ff;
+            color: #1a1a2e;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calculate-btn:hover {
+            background: #0099cc;
+            transform: translateY(-2px);
+        }
+
+        .results {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-top: 1px solid #e1e5e9;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .result-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1a1a2e;
+        }
+
+        .result-value.primary {
+            color: #00d4ff;
+        }
+
+        .result-value.success {
+            color: #28a745;
+        }
+
+        /* Mentorship Section */
+        .mentorship-hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .mentorship-hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a1a2e;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border: 3px solid #00d4ff;
+            transform: scale(1.05);
+        }
+
+        .pricing-header {
+            background: #1a1a2e;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .pricing-card.featured .pricing-header {
+            background: #00d4ff;
+            color: #1a1a2e;
+        }
+
+        .pricing-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .pricing-period {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .pricing-features {
+            padding: 2rem;
+        }
+
+        .pricing-features ul {
+            list-style: none;
+        }
+
+        .pricing-features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .pricing-features li i {
+            color: #28a745;
+            margin-right: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .calculator-form {
+                grid-template-columns: 1fr;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #1a1a2e;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Position Size Calculator</h1>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">TradeMaster Pro</a>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link" data-section="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-section="blog">Blog</a></li>
+                <li><a href="#" class="nav-link" data-section="calculator">Calculator</a></li>
+                <li><a href="#" class="nav-link" data-section="mentorship">Mentorship</a></li>
+            </ul>
         </div>
+    </nav>
 
-```
-    <div class="form-section">
-        <div class="input-group">
-            <label for="accountSize">Account Size ($)</label>
-            <input type="number" id="accountSize" value="10000">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1>Master the Markets</h1>
+            <p>Professional trading education, advanced tools, and funded trading opportunities</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary" data-section="mentorship">Join Our Program</a>
+                <a href="#" class="btn btn-secondary" data-section="calculator">Try Calculator</a>
+            </div>
         </div>
-        
-        <div class="input-group">
-            <label for="riskPercent">Risk Per Trade (%)</label>
-            <input type="number" id="riskPercent" value="0.5" step="0.1" max="5">
-        </div>
-        
-        <div class="input-group">
-            <label for="currencyPair">Instrument</label>
-            <select id="currencyPair">
-                <optgroup label="Major Pairs">
-                    <option value="EURUSD">EUR/USD</option>
-                    <option value="GBPUSD">GBP/USD</option>
-                    <option value="USDJPY">USD/JPY</option>
-                    <option value="USDCHF">USD/CHF</option>
-                    <option value="AUDUSD">AUD/USD</option>
-                    <option value="NZDUSD">NZD/USD</option>
-                    <option value="USDCAD">USD/CAD</option>
-                </optgroup>
-                <optgroup label="Minor Pairs">
-                    <option value="EURGBP">EUR/GBP</option>
-                    <option value="EURJPY">EUR/JPY</option>
-                    <option value="EURCHF">EUR/CHF</option>
-                    <option value="GBPJPY">GBP/JPY</option>
-                    <option value="GBPCHF">GBP/CHF</option>
-                    <option value="AUDJPY">AUD/JPY</option>
-                    <option value="AUDCHF">AUD/CHF</option>
-                    <option value="NZDJPY">NZD/JPY</option>
-                    <option value="NZDCHF">NZD/CHF</option>
-                    <option value="CHFJPY">CHF/JPY</option>
-                </optgroup>
-                <optgroup label="Commodities">
-                    <option value="XAUUSD" selected>Gold (XAU/USD)</option>
-                    <option value="XAGUSD">Silver (XAG/USD)</option>
-                    <option value="USOIL">US Oil</option>
-                    <option value="UKOIL">UK Oil</option>
-                </optgroup>
-                <optgroup label="Indices">
-                    <option value="US30">Dow Jones (US30)</option>
-                    <option value="US500">S&P 500 (US500)</option>
-                    <option value="NAS100">Nasdaq 100</option>
-                    <option value="UK100">FTSE 100</option>
-                    <option value="GER40">DAX 40</option>
-                </optgroup>
-                <optgroup label="Cryptocurrencies">
-                    <option value="BTCUSD">Bitcoin</option>
-                    <option value="ETHUSD">Ethereum</option>
-                </optgroup>
-            </select>
-        </div>
-        
-        <div class="input-group">
-            <label for="entryPrice">Entry Price</label>
-            <input type="number" id="entryPrice" value="2050.0" step="0.1">
-        </div>
-        
-        <div class="input-group">
-            <label for="stopLoss">Stop Loss Price</label>
-            <input type="number" id="stopLoss" value="2040.0" step="0.1">
-        </div>
+    </section>
 
-        <div class="input-group">
-            <label for="riskReward">Risk:Reward Ratio</label>
-            <select id="riskReward">
-                <option value="0.5">1:0.5</option>
-                <option value="1" selected>1:1</option>
-                <option value="1.5">1:1.5</option>
-                <option value="2">1:2</option>
-                <option value="2.5">1:2.5</option>
-                <option value="3">1:3</option>
-            </select>
-        </div>
-        
-        <button class="calculate-btn" id="calculateBtn">Calculate Position Size</button>
-    </div>
-    
-    <div id="resultSection" class="result-section hidden">
-        <div class="result-item">
-            <span class="result-label">Position Size</span>
-            <span id="positionSize" class="result-value primary">-</span>
-        </div>
-        <div class="result-item">
-            <span class="result-label">Risk Amount</span>
-            <span id="riskAmount" class="result-value">-</span>
-        </div>
-        <div class="result-item">
-            <span class="result-label">Potential Profit</span>
-            <span id="potentialProfit" class="result-value success">-</span>
-        </div>
-        <div class="result-item">
-            <span class="result-label">Take Profit</span>
-            <span id="takeProfit" class="result-value">-</span>
-        </div>
-    </div>
-</div>
-
-<script>
-    class PositionCalculator {
-        constructor() {
-            this.instruments = {
-                // Major Forex Pairs
-                'EURUSD': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
-                'GBPUSD': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
-                'USDJPY': { contractSize: 100000, pipSize: 0.01, type: 'forex' },
-                'USDCHF': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
-                'AUDUSD': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
-                'NZDUSD': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
-                'USDCAD': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="section-header">
+                <h2>Welcome to TradeMaster Pro</h2>
+                <p>Your complete trading education and tools platform</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Advanced Trading Tools</h3>
+                    <p>Professional-grade calculators and analysis tools to optimize your trading performance.</p>
+                </div>
                 
-                // Minor Pairs
-                'EURGBP': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
-                'EURJPY': { contractSize: 100000, pipSize: 0.01, type: 'forex' },
-                'EURCHF': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
-                'GBPJPY': { contractSize: 100000, pipSize: 0.01, type: 'forex' },
-                'GBPCHF': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
-                'AUDJPY': { contractSize: 100000, pipSize: 0.01, type: 'forex' },
-                'AUDCHF': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
-                'NZDJPY': { contractSize: 100000, pipSize: 0.01, type: 'forex' },
-                'NZDCHF': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
-                'CHFJPY': { contractSize: 100000, pipSize: 0.01, type: 'forex' },
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="feature-title">Expert Education</h3>
+                    <p>Learn from experienced traders with proven track records in the financial markets.</p>
+                </div>
                 
-                // Commodities
-                'XAUUSD': { contractSize: 100, pipSize: 0.1, type: 'commodity' },
-                'XAGUSD': { contractSize: 5000, pipSize: 0.01, type: 'commodity' },
-                'USOIL': { contractSize: 1000, pipSize: 0.01, type: 'commodity' },
-                'UKOIL': { contractSize: 1000, pipSize: 0.01, type: 'commodity' },
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3 class="feature-title">Funded Trading</h3>
+                    <p>Access funded trading accounts and trade with our capital after completing our program.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="section">
+            <div class="section-header">
+                <h2>Trading Insights & Education</h2>
+                <p>Stay updated with the latest market analysis and trading strategies</p>
+            </div>
+            
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">Risk Management: The Key to Consistent Profits</h3>
+                        <p class="blog-excerpt">Learn how proper risk management can make the difference between profitable and losing traders. Discover the 2% rule and position sizing strategies.</p>
+                        <div class="blog-meta">
+                            <span>March 15, 2024</span>
+                            <span>5 min read</span>
+                        </div>
+                    </div>
+                </article>
                 
-                // Indices
-                'US30': { contractSize: 1, pipSize: 1, type: 'index' },
-                'US500': { contractSize: 1, pipSize: 1, type: 'index' },
-                'NAS100': { contractSize: 1, pipSize: 1, type: 'index' },
-                'UK100': { contractSize: 1, pipSize: 1, type: 'index' },
-                'GER40': { contractSize: 1, pipSize: 1, type: 'index' },
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">Technical Analysis: Support and Resistance Levels</h3>
+                        <p class="blog-excerpt">Master the art of identifying key support and resistance levels to improve your entry and exit timing in the markets.</p>
+                        <div class="blog-meta">
+                            <span>March 12, 2024</span>
+                            <span>7 min read</span>
+                        </div>
+                    </div>
+                </article>
                 
-                // Crypto
-                'BTCUSD': { contractSize: 1, pipSize: 1, type: 'crypto' },
-                'ETHUSD': { contractSize: 1, pipSize: 1, type: 'crypto' }
-            };
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">Trading Psychology: Overcoming Emotional Trading</h3>
+                        <p class="blog-excerpt">Understand the psychological aspects of trading and learn techniques to maintain discipline and emotional control.</p>
+                        <div class="blog-meta">
+                            <span>March 10, 2024</span>
+                            <span>6 min read</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">Forex vs Stocks: Which Market is Right for You?</h3>
+                        <p class="blog-excerpt">Compare the advantages and disadvantages of forex and stock trading to determine which market suits your trading style.</p>
+                        <div class="blog-meta">
+                            <span>March 8, 2024</span>
+                            <span>8 min read</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">Algorithmic Trading: Getting Started with Automation</h3>
+                        <p class="blog-excerpt">Explore the world of algorithmic trading and learn how to automate your trading strategies for consistent execution.</p>
+                        <div class="blog-meta">
+                            <span>March 5, 2024</span>
+                            <span>10 min read</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">Global Market Hours: Trading Around the Clock</h3>
+                        <p class="blog-excerpt">Understand global market sessions and learn the best times to trade different currency pairs and instruments.</p>
+                        <div class="blog-meta">
+                            <span>March 3, 2024</span>
+                            <span>4 min read</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
 
-            this.exchangeRates = {
-                'EURUSD': 1.0950, 'GBPUSD': 1.2750, 'USDJPY': 148.50,
-                'USDCHF': 0.8750, 'AUDUSD': 0.6750, 'NZDUSD': 0.6150, 'USDCAD': 1.3550
-            };
-        }
+        <!-- Calculator Section -->
+        <section id="calculator" class="section">
+            <div class="section-header">
+                <h2>Position Size Calculator</h2>
+                <p>Calculate your optimal position size based on your risk management strategy</p>
+            </div>
+            
+            <div class="calculator-container">
+                <div class="calculator-header">
+                    <h3>Professional Position Size Calculator</h3>
+                    <p>Manage your risk effectively with precise position sizing</p>
+                </div>
+                
+                <div class="calculator-form">
+                    <div class="input-group">
+                        <label for="accountSize">Account Size ($)</label>
+                        <input type="number" id="accountSize" value="10000" min="100">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="riskPercent">Risk Per Trade (%)</label>
+                        <input type="number" id="riskPercent" value="1" step="0.1" min="0.1" max="5">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="currencyPair">Trading Instrument</label>
+                        <select id="currencyPair">
+                            <optgroup label="Major Forex Pairs">
+                                <option value="EURUSD">EUR/USD</option>
+                                <option value="GBPUSD">GBP/USD</option>
+                                <option value="USDJPY">USD/JPY</option>
+                                <option value="USDCHF">USD/CHF</option>
+                                <option value="AUDUSD">AUD/USD</option>
+                                <option value="NZDUSD">NZD/USD</option>
+                                <option value="USDCAD">USD/CAD</option>
+                            </optgroup>
+                            <optgroup label="Minor Pairs">
+                                <option value="EURGBP">EUR/GBP</option>
+                                <option value="EURJPY">EUR/JPY</option>
+                                <option value="EURCHF">EUR/CHF</option>
+                                <option value="GBPJPY">GBP/JPY</option>
+                                <option value="GBPCHF">GBP/CHF</option>
+                                <option value="AUDJPY">AUD/JPY</option>
+                            </optgroup>
+                            <optgroup label="Commodities">
+                                <option value="XAUUSD" selected>Gold (XAU/USD)</option>
+                                <option value="XAGUSD">Silver (XAG/USD)</option>
+                                <option value="USOIL">US Oil</option>
+                                <option value="UKOIL">UK Oil</option>
+                            </optgroup>
+                            <optgroup label="Indices">
+                                <option value="US30">Dow Jones (US30)</option>
+                                <option value="US500">S&P 500 (US500)</option>
+                                <option value="NAS100">Nasdaq 100</option>
+                                <option value="UK100">FTSE 100</option>
+                                <option value="GER40">DAX 40</option>
+                            </optgroup>
+                            <optgroup label="Cryptocurrencies">
+                                <option value="BTCUSD">Bitcoin</option>
+                                <option value="ETHUSD">Ethereum</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="entryPrice">Entry Price</label>
+                        <input type="number" id="entryPrice" value="2050.0" step="0.1">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="stopLoss">Stop Loss Price</label>
+                        <input type="number" id="stopLoss" value="2040.0" step="0.1">
+                    </div>
 
-        calculatePipValue(pair, entryPrice, config) {
-            const quote = pair.substring(3, 6);
-            const base = pair.substring(0, 3);
+                    <div class="input-group">
+                        <label for="riskReward">Risk:Reward Ratio</label>
+                        <select id="riskReward">
+                            <option value="0.5">1:0.5</option>
+                            <option value="1">1:1</option>
+                            <option value="1.5">1:1.5</option>
+                            <option value="2" selected>1:2</option>
+                            <option value="2.5">1:2.5</option>
+                            <option value="3">1:3</option>
+                        </select>
+                    </div>
+                    
+                    <button class="calculate-btn" id="calculateBtn">Calculate Position Size</button>
+                </div>
+                
+                <div id="results" class="results">
+                    <div class="result-grid">
+                        <div class="result-item">
+                            <div class="result-label">Position Size</div>
+                            <div id="positionSize" class="result-value primary">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Risk Amount</div>
+                            <div id="riskAmount" class="result-value">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Potential Profit</div>
+                            <div id="potentialProfit" class="result-value success">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Take Profit Price</div>
+                            <div id="takeProfit" class="result-value">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            // USD quoted pairs
-            if (quote === 'USD') return 10;
+        <!-- Mentorship Section -->
+        <section id="mentorship" class="section">
+            <div class="mentorship-hero">
+                <h2>Funded Trading Mentorship</h2>
+                <p>Join our exclusive program and trade with our capital</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 class="feature-title">1-on-1 Mentoring</h3>
+                    <p>Get personalized guidance from experienced traders with proven track records in live markets.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h3 class="feature-title">Comprehensive Curriculum</h3>
+                    <p>Master technical analysis, risk management, trading psychology, and advanced strategies.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">Trading Community</h3>
+                    <p>Join a community of serious traders sharing insights, strategies, and market analysis.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Live Trading Sessions</h3>
+                    <p>Watch professional traders execute live trades and learn real-time decision making.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3 class="feature-title">Funded Accounts</h3>
+                    <p>Trade with our capital once you demonstrate consistent profitability and risk management.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="feature-title">24/7 Support</h3>
+                    <p>Get continuous support and feedback on your trading journey from our expert team.</p>
+                </div>
+            </div>
+            
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Starter Program</h3>
+                        <div class="pricing-price">$497</div>
+                        <div class="pricing-period">one-time</div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> 8-week comprehensive course</li>
+                            <li><i class="fas fa-check"></i> Weekly group mentoring calls</li>
+                            <li><i class="fas fa-check"></i> Trading community access</li>
+                            <li><i class="fas fa-check"></i> Basic trading tools</li>
+                            <li><i class="fas fa-check"></i> Email support</li>
+                        </ul>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Get Started</button>
+                    </div>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Pro Trader Program</h3>
+                        <div class="pricing-price">$1,497</div>
+                        <div class="pricing-period">one-time</div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Everything in Starter</li>
+                            <li><i class="fas fa-check"></i> 1-on-1 mentoring sessions</li>
+                            <li><i class="fas fa-check"></i> Live trading room access</li>
+                            <li><i class="fas fa-check"></i> Advanced trading strategies</li>
+                            <li><i class="fas fa-check"></i> Portfolio review & feedback</li>
+                            <li><i class="fas fa-check"></i> Funded account evaluation</li>
+                        </ul>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Most Popular</button>
+                    </div>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Elite Funded Program</h3>
+                        <div class="pricing-price">$2,997</div>
+                        <div class="pricing-period">one-time</div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Everything in Pro Trader</li>
+                            <li><i class="fas fa-check"></i> Direct funded account access</li>
+                            <li><i class="fas fa-check"></i> Up to $100K trading capital</li>
+                            <li><i class="fas fa-check"></i> 80% profit split</li>
+                            <li><i class="fas fa-check"></i> Priority support</li>
+                            <li><i class="fas fa-check"></i> Lifetime community access</li>
+                        </ul>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Go Elite</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-            // JPY pairs
-            if (quote === 'JPY') {
-                const usdJpyRate = this.exchangeRates['USDJPY'] || 148.50;
-                const pipValueJPY = config.contractSize * config.pipSize;
-                return pipValueJPY / usdJpyRate;
+    <script>
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
+            const ctaButtons = document.querySelectorAll('[data-section]');
+
+            function showSection(targetSection) {
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                const target = document.getElementById(targetSection);
+                if (target) {
+                    target.classList.add('active');
+                }
             }
 
-            // USD base pairs
-            if (base === 'USD') {
-                return (config.contractSize * config.pipSize) / entryPrice;
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetSection = this.getAttribute('data-section');
+                    showSection(targetSection);
+                });
+            });
+
+            ctaButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetSection = this.getAttribute('data-section');
+                    showSection(targetSection);
+                });
+            });
+        });
+
+        // Position Size Calculator
+        class PositionCalculator {
+            constructor() {
+                this.instruments = {
+                    // Major Forex Pairs
+                    'EURUSD': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                    'GBPUSD': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                    'USDJPY': { contractSize: 100000, pipSize: 0.01, type: 'forex' },
+                    'USDCHF': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                    'AUDUSD': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                    'NZDUSD': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                    'USDCAD': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                    
+                    // Minor Pairs
+                    'EURGBP': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                    'EURJPY': { contractSize: 100000, pipSize: 0.01, type: 'forex' },
+                    'EURCHF': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                    'GBPJPY': { contractSize: 100000, pipSize: 0.01, type: 'forex' },
+                    'GBPCHF': { contractSize: 100000, pipSize: 0.0001, type: 'forex' },
+                    'AUDJPY': { contractSize: 100000, pipSize: 0.01, type: 'forex' },
+                    
+                    // Commodities
+                    'XAUUSD': { contractSize: 100, pipSize: 0.1, type: 'commodity' },
+                    'XAGUSD': { contractSize: 5000, pipSize: 0.01, type: 'commodity' },
+                    'USOIL': { contractSize: 1000, pipSize: 0.01, type: 'commodity' },
+                    'UKOIL': { contractSize: 1000, pipSize: 0.01, type: 'commodity' },
+                    
+                    // Indices
+                    'US30': { contractSize: 1, pipSize: 1, type: 'index' },
+                    'US500': { contractSize: 1, pipSize: 1, type: 'index' },
+                    'NAS100': { contractSize: 1, pipSize: 1, type: 'index' },
+                    'UK100': { contractSize: 1, pipSize: 1, type: 'index' },
+                    'GER40': { contractSize: 1, pipSize: 1, type: 'index' },
+                    
+                    // Crypto
+                    'BTCUSD': { contractSize: 1, pipSize: 1, type: 'crypto' },
+                    'ETHUSD': { contractSize: 1, pipSize: 1, type: 'crypto' }
+                };
+
+                this.exchangeRates = {
+                    'EURUSD': 1.0950, 'GBPUSD': 1.2750, 'USDJPY': 148.50,
+                    'USDCHF': 0.8750, 'AUDUSD': 0.6750, 'NZDUSD': 0.6150, 'USDCAD': 1.3550
+                };
             }
 
-            // Cross pairs - simplified for major currencies
-            const rates = {
-                'CHF': 1 / (this.exchangeRates['USDCHF'] || 0.8750),
-                'EUR': this.exchangeRates['EURUSD'] || 1.0950,
-                'GBP': this.exchangeRates['GBPUSD'] || 1.2750,
-                'AUD': this.exchangeRates['AUDUSD'] || 0.6750,
-                'NZD': this.exchangeRates['NZDUSD'] || 0.6150,
-                'CAD': 1 / (this.exchangeRates['USDCAD'] || 1.3550)
-            };
+            calculatePipValue(pair, entryPrice, config) {
+                const quote = pair.substring(3, 6);
+                const base = pair.substring(0, 3);
 
-            const baseRate = rates[base] || 1;
-            const quoteRate = rates[quote] || 1;
+                // USD quoted pairs
+                if (quote === 'USD') return 10;
 
-            if (quote === 'CHF' || quote === 'CAD') {
-                return (config.contractSize * config.pipSize) / quoteRate;
-            } else {
-                return (config.contractSize * config.pipSize) * quoteRate;
+                // JPY pairs
+                if (quote === 'JPY') {
+                    const usdJpyRate = this.exchangeRates['USDJPY'] || 148.50;
+                    const pipValueJPY = config.contractSize * config.pipSize;
+                    return pipValueJPY / usdJpyRate;
+                }
+
+                // USD base pairs
+                if (base === 'USD') {
+                    return (config.contractSize * config.pipSize) / entryPrice;
+                }
+
+                // Cross pairs - simplified for major currencies
+                const rates = {
+                    'CHF': 1 / (this.exchangeRates['USDCHF'] || 0.8750),
+                    'EUR': this.exchangeRates['EURUSD'] || 1.0950,
+                    'GBP': this.exchangeRates['GBPUSD'] || 1.2750,
+                    'AUD': this.exchangeRates['AUDUSD'] || 0.6750,
+                    'NZD': this.exchangeRates['NZDUSD'] || 0.6150,
+                    'CAD': 1 / (this.exchangeRates['USDCAD'] || 1.3550)
+                };
+
+                const baseRate = rates[base] || 1;
+                const quoteRate = rates[quote] || 1;
+
+                if (quote === 'CHF' || quote === 'CAD') {
+                    return (config.contractSize * config.pipSize) / quoteRate;
+                } else {
+                    return (config.contractSize * config.pipSize) * quoteRate;
+                }
+            }
+
+            calculate(params) {
+                const { accountSize, riskPercent, entryPrice, stopLoss, pair, riskReward } = params;
+                const config = this.instruments[pair];
+                
+                if (!config) throw new Error('Unsupported instrument');
+
+                const riskAmount = (riskPercent / 100) * accountSize;
+                const priceDiff = Math.abs(entryPrice - stopLoss);
+                const pipsAtRisk = priceDiff / config.pipSize;
+                const pipValue = this.calculatePipValue(pair, entryPrice, config);
+                
+                let lotSize = riskAmount / (pipsAtRisk * pipValue);
+                lotSize = Math.max(0.01, Math.round(lotSize * 100) / 100);
+
+                const isLong = stopLoss < entryPrice;
+                const profitDistance = priceDiff * parseFloat(riskReward);
+                const takeProfitPrice = isLong ? entryPrice + profitDistance : entryPrice - profitDistance;
+                const potentialProfit = riskAmount * parseFloat(riskReward);
+
+                return {
+                    lotSize: lotSize,
+                    riskAmount,
+                    potentialProfit,
+                    takeProfitPrice: parseFloat(takeProfitPrice.toFixed(this.getPricePrecision(pair)))
+                };
+            }
+
+            getPricePrecision(pair) {
+                const config = this.instruments[pair];
+                if (pair.includes('JPY')) return 2;
+                if (config.type === 'commodity' && pair === 'XAUUSD') return 1;
+                if (config.type === 'index' || config.type === 'crypto') return 0;
+                return 5;
             }
         }
 
-        calculate(params) {
-            const { accountSize, riskPercent, entryPrice, stopLoss, pair, riskReward } = params;
-            const config = this.instruments[pair];
+        const calculator = new PositionCalculator();
+
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            try {
+                const params = {
+                    accountSize: parseFloat(document.getElementById('accountSize').value),
+                    riskPercent: parseFloat(document.getElementById('riskPercent').value),
+                    entryPrice: parseFloat(document.getElementById('entryPrice').value),
+                    stopLoss: parseFloat(document.getElementById('stopLoss').value),
+                    pair: document.getElementById('currencyPair').value,
+                    riskReward: document.getElementById('riskReward').value
+                };
+
+                const result = calculator.calculate(params);
+                
+                document.getElementById('positionSize').textContent = result.lotSize.toFixed(2) + ' lots';
+                document.getElementById('riskAmount').textContent = '$' + result.riskAmount.toFixed(2);
+                document.getElementById('potentialProfit').textContent = '$' + result.potentialProfit.toFixed(2);
+                document.getElementById('takeProfit').textContent = result.takeProfitPrice;
+                
+                document.getElementById('results').classList.add('show');
+                
+            } catch (error) {
+                alert('Calculation error: ' + error.message);
+            }
+        });
+
+        // Auto-update prices when instrument changes
+        document.getElementById('currencyPair').addEventListener('change', function(e) {
+            const pair = e.target.value;
+            const entryInput = document.getElementById('entryPrice');
+            const stopInput = document.getElementById('stopLoss');
             
-            if (!config) throw new Error('Unsupported instrument');
-
-            const riskAmount = (riskPercent / 100) * accountSize;
-            const priceDiff = Math.abs(entryPrice - stopLoss);
-            const pipsAtRisk = priceDiff / config.pipSize;
-            const pipValue = this.calculatePipValue(pair, entryPrice, config);
-            
-            let lotSize = riskAmount / (pipsAtRisk * pipValue);
-            lotSize = Math.max(0.01, Math.round(lotSize * 100) / 100); // Round to 2 decimals, min 0.01
-
-            const isLong = stopLoss < entryPrice;
-            const profitDistance = priceDiff * parseFloat(riskReward);
-            const takeProfitPrice = isLong ? entryPrice + profitDistance : entryPrice - profitDistance;
-            const potentialProfit = riskAmount * parseFloat(riskReward);
-
-            return {
-                lotSize: lotSize,
-                riskAmount,
-                potentialProfit,
-                takeProfitPrice: parseFloat(takeProfitPrice.toFixed(this.getPricePrecision(pair)))
+            const prices = {
+                'EURUSD': [1.0950, 1.0900], 'GBPUSD': [1.2750, 1.2700],
+                'USDJPY': [148.50, 148.00], 'USDCHF': [0.8750, 0.8700],
+                'AUDUSD': [0.6750, 0.6700], 'NZDUSD': [0.6150, 0.6100],
+                'USDCAD': [1.3550, 1.3600], 'EURGBP': [0.8550, 0.8500],
+                'EURJPY': [162.50, 162.00], 'GBPJPY': [189.50, 189.00],
+                'CHFJPY': [184.00, 184.50], 'XAUUSD': [2050.0, 2040.0],
+                'XAGUSD': [24.50, 24.00], 'USOIL': [75.50, 74.50],
+                'US30': [35000, 34900], 'US500': [4500, 4480],
+                'NAS100': [15500, 15450], 'BTCUSD': [43000, 42500],
+                'ETHUSD': [2500, 2450]
             };
-        }
-
-        getPricePrecision(pair) {
-            const config = this.instruments[pair];
-            if (pair.includes('JPY')) return 2;
-            if (config.type === 'commodity' && pair === 'XAUUSD') return 1;
-            if (config.type === 'index' || config.type === 'crypto') return 0;
-            return 5;
-        }
-    }
-
-    const calculator = new PositionCalculator();
-
-    document.getElementById('calculateBtn').addEventListener('click', function() {
-        try {
-            const params = {
-                accountSize: parseFloat(document.getElementById('accountSize').value),
-                riskPercent: parseFloat(document.getElementById('riskPercent').value),
-                entryPrice: parseFloat(document.getElementById('entryPrice').value),
-                stopLoss: parseFloat(document.getElementById('stopLoss').value),
-                pair: document.getElementById('currencyPair').value,
-                riskReward: document.getElementById('riskReward').value
-            };
-
-            const result = calculator.calculate(params);
             
-            document.getElementById('positionSize').textContent = result.lotSize.toFixed(2) + ' lots';
-            document.getElementById('riskAmount').textContent = '$' + result.riskAmount.toFixed(2);
-            document.getElementById('potentialProfit').textContent = '$' + result.potentialProfit.toFixed(2);
-            document.getElementById('takeProfit').textContent = result.takeProfitPrice;
-            
-            document.getElementById('resultSection').classList.remove('hidden');
-            
-        } catch (error) {
-            alert('Calculation error: ' + error.message);
-        }
-    });
-
-    // Auto-update prices when instrument changes
-    document.getElementById('currencyPair').addEventListener('change', function(e) {
-        const pair = e.target.value;
-        const entryInput = document.getElementById('entryPrice');
-        const stopInput = document.getElementById('stopLoss');
-        
-        const prices = {
-            'EURUSD': [1.0950, 1.0900], 'GBPUSD': [1.2750, 1.2700],
-            'USDJPY': [148.50, 148.00], 'USDCHF': [0.8750, 0.8700],
-            'AUDUSD': [0.6750, 0.6700], 'NZDUSD': [0.6150, 0.6100],
-            'USDCAD': [1.3550, 1.3600], 'EURGBP': [0.8550, 0.8500],
-            'EURJPY': [162.50, 162.00], 'GBPJPY': [189.50, 189.00],
-            'CHFJPY': [184.00, 184.50], 'XAUUSD': [2050.0, 2040.0],
-            'XAGUSD': [24.50, 24.00], 'USOIL': [75.50, 74.50],
-            'US30': [35000, 34900], 'US500': [4500, 4480],
-            'NAS100': [15500, 15450], 'BTCUSD': [43000, 42500],
-            'ETHUSD': [2500, 2450]
-        };
-        
-        if (prices[pair]) {
-            entryInput.value = prices[pair][0];
-            stopInput.value = prices[pair][1];
-        }
-    });
-
-    // Auto-calculate on page load
-    window.addEventListener('load', function() {
-        document.getElementById('calculateBtn').click();
-    });
-</script>
-```
-
+            if (prices[pair]) {
+                entryInput.value = prices[pair][0];
+                stopInput.value = prices[pair][1];
+            }
+        });
+    </script>
 </body>
 </html>
