@@ -242,29 +242,28 @@
         
         <div class="input-group">
             <label for="riskPercent">Risk Per Trade (%)</label>
-            <input type="number" id="riskPercent" placeholder="1.0" value="1.0" max="5" step="0.1">
+            <input type="number" id="riskPercent" placeholder="0.5" value="0.5" max="5" step="0.1">
         </div>
         
         <div class="input-group">
             <label for="entryPrice">Entry Price</label>
-            <input type="number" id="entryPrice" placeholder="1.1000" step="0.00001" value="1.09500">
+            <input type="number" id="entryPrice" placeholder="2050.0" step="0.1" value="2050.0">
         </div>
         
         <div class="input-group">
             <label for="stopLoss">Stop Loss Price</label>
-            <input type="number" id="stopLoss" placeholder="1.0980" step="0.00001" value="1.09000">
+            <input type="number" id="stopLoss" placeholder="2040.0" step="0.1" value="2040.0">
         </div>
 
         <div class="input-group">
             <label for="riskReward">Risk:Reward Ratio</label>
             <select id="riskReward">
-                <option value="1">1:1</option>
+                <option value="0.5">1:0.5</option>
+                <option value="1" selected>1:1</option>
                 <option value="1.5">1:1.5</option>
-                <option value="2" selected>1:2</option>
+                <option value="2">1:2</option>
                 <option value="2.5">1:2.5</option>
                 <option value="3">1:3</option>
-                <option value="4">1:4</option>
-                <option value="5">1:5</option>
             </select>
         </div>
         
@@ -272,7 +271,7 @@
             <label for="currencyPair">Currency Pair</label>
             <select id="currencyPair">
                 <optgroup label="Major Pairs">
-                    <option value="EURUSD" selected>EUR/USD</option>
+                    <option value="EURUSD">EUR/USD</option>
                     <option value="GBPUSD">GBP/USD</option>
                     <option value="USDJPY">USD/JPY</option>
                     <option value="USDCHF">USD/CHF</option>
@@ -293,7 +292,7 @@
                     <option value="CHFJPY">CHF/JPY</option>
                 </optgroup>
                 <optgroup label="Commodities">
-                    <option value="XAUUSD">Gold (XAU/USD)</option>
+                    <option value="XAUUSD" selected>Gold (XAU/USD)</option>
                     <option value="XAGUSD">Silver (XAG/USD)</option>
                     <option value="USOIL">US Oil</option>
                     <option value="UKOIL">UK Oil</option>
@@ -321,56 +320,49 @@
 <script>
     class FundedTradingCalculator {
         constructor() {
-            // Funded trading account specifications with accurate contract sizes and leverage
+            // Funded trading account specifications with accurate contract sizes
             this.instrumentConfig = {
-                // Major Forex Pairs - Funded accounts typically use 1:30 leverage
+                // Major Forex Pairs
                 'EURUSD': { 
                     contractSize: 100000, 
                     pipSize: 0.0001, 
                     pipPosition: 4,
-                    leverage: 30,  // Funded account standard
                     type: 'forex'
                 },
                 'GBPUSD': { 
                     contractSize: 100000, 
                     pipSize: 0.0001, 
                     pipPosition: 4,
-                    leverage: 30,
                     type: 'forex'
                 },
                 'USDJPY': { 
                     contractSize: 100000, 
                     pipSize: 0.01, 
                     pipPosition: 2,
-                    leverage: 30,
                     type: 'forex'
                 },
                 'USDCHF': { 
                     contractSize: 100000, 
                     pipSize: 0.0001, 
                     pipPosition: 4,
-                    leverage: 30,
                     type: 'forex'
                 },
                 'AUDUSD': { 
                     contractSize: 100000, 
                     pipSize: 0.0001, 
                     pipPosition: 4,
-                    leverage: 30,
                     type: 'forex'
                 },
                 'NZDUSD': { 
                     contractSize: 100000, 
                     pipSize: 0.0001, 
                     pipPosition: 4,
-                    leverage: 30,
                     type: 'forex'
                 },
                 'USDCAD': { 
                     contractSize: 100000, 
                     pipSize: 0.0001, 
                     pipPosition: 4,
-                    leverage: 30,
                     type: 'forex'
                 },
                 
@@ -379,155 +371,147 @@
                     contractSize: 100000, 
                     pipSize: 0.0001, 
                     pipPosition: 4,
-                    leverage: 30,
                     type: 'forex'
                 },
                 'EURJPY': { 
                     contractSize: 100000, 
                     pipSize: 0.01, 
                     pipPosition: 2,
-                    leverage: 30,
                     type: 'forex'
                 },
                 'EURCHF': { 
                     contractSize: 100000, 
                     pipSize: 0.0001, 
                     pipPosition: 4,
-                    leverage: 30,
                     type: 'forex'
                 },
                 'GBPJPY': { 
                     contractSize: 100000, 
                     pipSize: 0.01, 
                     pipPosition: 2,
-                    leverage: 30,
                     type: 'forex'
                 },
                 'GBPCHF': { 
                     contractSize: 100000, 
                     pipSize: 0.0001, 
                     pipPosition: 4,
-                    leverage: 30,
                     type: 'forex'
                 },
                 'AUDJPY': { 
                     contractSize: 100000, 
                     pipSize: 0.01, 
                     pipPosition: 2,
-                    leverage: 30,
                     type: 'forex'
                 },
                 'AUDCHF': { 
                     contractSize: 100000, 
                     pipSize: 0.0001, 
                     pipPosition: 4,
-                    leverage: 30,
                     type: 'forex'
                 },
                 'NZDJPY': { 
                     contractSize: 100000, 
                     pipSize: 0.01, 
                     pipPosition: 2,
-                    leverage: 30,
                     type: 'forex'
                 },
                 'NZDCHF': { 
                     contractSize: 100000, 
                     pipSize: 0.0001, 
                     pipPosition: 4,
-                    leverage: 30,
                     type: 'forex'
                 },
                 'CHFJPY': { 
                     contractSize: 100000, 
                     pipSize: 0.01, 
                     pipPosition: 2,
-                    leverage: 30,
                     type: 'forex'
                 },
                 
-                // Commodities - Funded accounts typically use 1:9 leverage
+                // Commodities
                 'XAUUSD': { 
                     contractSize: 100, 
                     pipSize: 0.1, 
                     pipPosition: 1,
-                    leverage: 9,
                     type: 'commodity'
                 },
                 'XAGUSD': { 
                     contractSize: 5000, 
                     pipSize: 0.01, 
                     pipPosition: 2,
-                    leverage: 9,
                     type: 'commodity'
                 },
                 'USOIL': { 
                     contractSize: 1000, 
                     pipSize: 0.01, 
                     pipPosition: 2,
-                    leverage: 9,
                     type: 'commodity'
                 },
                 'UKOIL': { 
                     contractSize: 1000, 
                     pipSize: 0.01, 
                     pipPosition: 2,
-                    leverage: 9,
                     type: 'commodity'
                 },
                 
-                // Indices - Funded accounts typically use 1:15 leverage
+                // Indices
                 'US30': { 
                     contractSize: 1, 
                     pipSize: 1, 
                     pipPosition: 0,
-                    leverage: 15,
                     type: 'index'
                 },
                 'US500': { 
                     contractSize: 1, 
                     pipSize: 1, 
                     pipPosition: 0,
-                    leverage: 15,
                     type: 'index'
                 },
                 'NAS100': { 
                     contractSize: 1, 
                     pipSize: 1, 
                     pipPosition: 0,
-                    leverage: 15,
                     type: 'index'
                 },
                 'UK100': { 
                     contractSize: 1, 
                     pipSize: 1, 
                     pipPosition: 0,
-                    leverage: 15,
                     type: 'index'
                 },
                 'GER40': { 
                     contractSize: 1, 
                     pipSize: 1, 
                     pipPosition: 0,
-                    leverage: 15,
                     type: 'index'
                 },
                 
-                // Crypto - Funded accounts typically use 1:2 leverage
+                // Crypto
                 'BTCUSD': { 
                     contractSize: 1, 
                     pipSize: 1, 
                     pipPosition: 0,
-                    leverage: 2,
                     type: 'crypto'
                 },
                 'ETHUSD': { 
                     contractSize: 1, 
                     pipSize: 1, 
                     pipPosition: 0,
-                    leverage: 2,
                     type: 'crypto'
                 }
+            };
+
+            // Current exchange rates for accurate cross-pair calculations (simplified)
+            this.exchangeRates = {
+                'EURUSD': 1.0950,
+                'GBPUSD': 1.2750,
+                'USDJPY': 148.50,
+                'USDCHF': 0.8750,
+                'AUDUSD': 0.6750,
+                'NZDUSD': 0.6150,
+                'USDCAD': 1.3550,
+                'EURGBP': 0.8550,
+                'CHFJPY': 169.50
             };
         }
 
@@ -552,21 +536,21 @@
             // Calculate pips at risk
             const pipsAtRisk = this.calculatePipsAtRisk(priceDifference, config);
             
-            // Calculate pip value using funded trading method
-            const pipValue = this.calculatePipValueFunded(currencyPair, entryPrice, config);
+            // Calculate pip value in USD using correct methodology
+            const pipValue = this.calculatePipValueUSD(currencyPair, entryPrice, config);
             
             if (pipValue <= 0 || isNaN(pipValue)) {
-                throw new Error(`Invalid pip value: ${pipValue} for ${currencyPair}`);
+                throw new Error(`Invalid pip value calculation for ${currencyPair}`);
             }
 
-            // Calculate position size
+            // Calculate position size: Risk Amount / (Pips at Risk × Pip Value)
             const lotSize = riskAmount / (pipsAtRisk * pipValue);
             
-            // Calculate margin using funded account leverage
-            const marginRequired = this.calculateMarginFunded(lotSize, entryPrice, config, currencyPair);
+            // Calculate margin required
+            const marginRequired = this.calculateMargin(lotSize, entryPrice, config, currencyPair);
             const marginPercent = (marginRequired / accountSize) * 100;
             
-            // Calculate take profit based on risk:reward ratio
+            // Calculate take profit
             const profitDistance = priceDifference * parseFloat(riskReward);
             const takeProfitPrice = isLong ? entryPrice + profitDistance : entryPrice - profitDistance;
             const potentialProfit = riskAmount * parseFloat(riskReward);
@@ -593,56 +577,116 @@
         }
 
         calculatePipsAtRisk(priceDifference, config) {
-            // For JPY pairs, pip is at 2nd decimal place
-            if (config.pipPosition === 2) {
-                return priceDifference / config.pipSize;
-            }
-            // For most forex pairs, pip is at 4th decimal place
-            else if (config.pipPosition === 4) {
-                return priceDifference / config.pipSize;
-            }
-            // For indices and other instruments
-            else {
-                return priceDifference / config.pipSize;
-            }
+            return priceDifference / config.pipSize;
         }
 
-        calculatePipValueFunded(currencyPair, entryPrice, config) {
-            // Funded trading pip value calculation method
-            
-            // For JPY pairs (XXX/JPY)
-            if (currencyPair.endsWith('JPY')) {
-                // Pip value = (Contract Size × Pip Size) 
+        calculatePipValueUSD(currencyPair, entryPrice, config) {
+            const base = currencyPair.substring(0, 3);
+            const quote = currencyPair.substring(3, 6);
+
+            // 1. USD-Quoted Majors (EURUSD, GBPUSD, AUDUSD, etc.)
+            if (quote === 'USD') {
+                return 10; // Fixed $10 per standard lot for all USD-quoted pairs
+            }
+
+            // 2. JPY Pairs (USDJPY, EURJPY, CHFJPY, etc.)
+            if (quote === 'JPY') {
+                // One pip = 0.01, Standard lot = 100,000
+                // Pip value in JPY = 100,000 × 0.01 = 1,000 JPY
+                // Convert to USD using USDJPY rate
+                const usdJpyRate = this.exchangeRates['USDJPY'] || 148.50;
+                const pipValueJPY = config.contractSize * config.pipSize; // 1,000 JPY for standard lot
+                return pipValueJPY / usdJpyRate; // ~$6.67 at USDJPY = 150
+            }
+
+            // 3. USD Base Pairs (USDCHF, USDCAD, etc.)
+            if (base === 'USD') {
+                // Pip value in quote currency, need to convert to USD
+                const pipValueInQuoteCurrency = config.contractSize * config.pipSize;
+                return pipValueInQuoteCurrency / entryPrice;
+            }
+
+            // 4. Cross Pairs without USD (EURCHF, EURGBP, AUDCAD, etc.)
+            // Pip value is in quote currency, convert to USD
+            if (quote === 'CHF') {
+                const pipValueCHF = config.contractSize * config.pipSize; // 10 CHF for standard lot
+                const usdChfRate = this.exchangeRates['USDCHF'] || 0.8750;
+                return pipValueCHF / usdChfRate; // ~$11.43 when USDCHF = 0.8750
+            }
+
+            if (quote === 'GBP') {
+                const pipValueGBP = config.contractSize * config.pipSize;
+                const gbpUsdRate = this.exchangeRates['GBPUSD'] || 1.2750;
+                return pipValueGBP * gbpUsdRate;
+            }
+
+            if (quote === 'EUR') {
+                const pipValueEUR = config.contractSize * config.pipSize;
+                const eurUsdRate = this.exchangeRates['EURUSD'] || 1.0950;
+                return pipValueEUR * eurUsdRate;
+            }
+
+            if (quote === 'AUD') {
+                const pipValueAUD = config.contractSize * config.pipSize;
+                const audUsdRate = this.exchangeRates['AUDUSD'] || 0.6750;
+                return pipValueAUD * audUsdRate;
+            }
+
+            if (quote === 'NZD') {
+                const pipValueNZD = config.contractSize * config.pipSize;
+                const nzdUsdRate = this.exchangeRates['NZDUSD'] || 0.6150;
+                return pipValueNZD * nzdUsdRate;
+            }
+
+            if (quote === 'CAD') {
+                const pipValueCAD = config.contractSize * config.pipSize;
+                const usdCadRate = this.exchangeRates['USDCAD'] || 1.3550;
+                return pipValueCAD / usdCadRate;
+            }
+
+            // 5. Gold (XAUUSD) - $1 move = $100 per lot
+            if (currencyPair === 'XAUUSD') {
+                return config.contractSize * config.pipSize; // 100 × 0.1 = $10 per $0.10 move
+            }
+
+            // 6. Silver (XAGUSD) - $0.01 move = $50 per lot  
+            if (currencyPair === 'XAGUSD') {
+                return config.contractSize * config.pipSize; // 5000 × 0.01 = $50
+            }
+
+            // 7. Oil contracts
+            if (currencyPair === 'USOIL' || currencyPair === 'UKOIL') {
+                return config.contractSize * config.pipSize; // 1000 × 0.01 = $10 per $0.01 move
+            }
+
+            // 8. Indices - broker-defined contract specs
+            if (config.type === 'index') {
+                return config.contractSize * config.pipSize; // Varies by index
+            }
+
+            // 9. Crypto - contract size varies by broker
+            if (config.type === 'crypto') {
                 return config.contractSize * config.pipSize;
             }
-            
-            // For USD quote pairs (XXX/USD)
-            if (currencyPair.endsWith('USD')) {
-                // Pip value = Contract Size × Pip Size
-                return config.contractSize * config.pipSize;
-            }
-            
-            // For USD base pairs (USD/XXX)
-            if (currencyPair.startsWith('USD')) {
-                // Pip value = (Contract Size × Pip Size) / Current Price
-                return (config.contractSize * config.pipSize) / entryPrice;
-            }
-            
-            // For cross pairs (need USD conversion - simplified)
-            // In real funded accounts, this would require current USD exchange rates
+
+            // Default fallback
             return config.contractSize * config.pipSize;
         }
 
-        calculateMarginFunded(lotSize, entryPrice, config, currencyPair) {
+        calculateMargin(lotSize, entryPrice, config, currencyPair) {
             const notionalValue = lotSize * config.contractSize;
-            const leverageRatio = config.leverage;
             
-            // Funded account margin calculation: Notional Value / Leverage
-            if (currencyPair.endsWith('USD') || config.type === 'commodity' || config.type === 'index' || config.type === 'crypto') {
-                return (notionalValue * entryPrice) / leverageRatio;
+            if (config.type === 'forex') {
+                // For USD base pairs
+                if (currencyPair.startsWith('USD')) {
+                    return (notionalValue * entryPrice) / config.leverage;
+                } else {
+                    // For other forex pairs, convert to USD
+                    return (notionalValue * entryPrice) / config.leverage;
+                }
             } else {
-                // For other pairs, convert to USD (simplified - real funded accounts use current rates)
-                return (notionalValue * entryPrice) / leverageRatio;
+                // For commodities, indices, crypto
+                return (notionalValue * entryPrice) / config.leverage;
             }
         }
 
@@ -688,12 +732,22 @@
                 return;
             }
 
+            console.log('Calculating with params:', params);
             const result = calculator.calculate(params);
+            console.log('Calculation result:', result);
             displayResult(result);
 
         } catch (error) {
             console.error('Calculation error:', error);
-            showNotification(error.message, 'error');
+            showNotification(`Calculation error: ${error.message}`, 'error');
+            
+            // Show debug info in console
+            const params = getFormData();
+            console.log('Debug - Input params:', params);
+            if (params) {
+                const config = calculator.getInstrumentInfo(params.currencyPair);
+                console.log('Debug - Instrument config:', config);
+            }
         }
     }
 
@@ -734,17 +788,10 @@
         const riskWarning = result.riskPercent > 2 ? 
             '<div class="warning-message">⚠️ Funded accounts recommend maximum 1-2% risk per trade!</div>' : '';
 
-        const marginWarning = result.marginPercent > 50 ? 
-            '<div class="warning-message">⚠️ High margin usage detected!</div>' : '';
-
-        const leverageInfo = `<div class="info-message">📊 Funded Trading ${result.instrumentType} leverage: 1:${result.leverage}</div>`;
-
         resultContainer.innerHTML = `
             <div class="calculation-result">
                 <h4>Funded Trading Position Calculation</h4>
-                ${leverageInfo}
                 ${riskWarning}
-                ${marginWarning}
                 
                 <div class="result-grid">
                     <div class="result-item">
@@ -773,13 +820,6 @@
                     </div>
                     
                     <div class="result-item">
-                        <span class="result-label">Margin Required:</span>
-                        <span class="result-value ${result.marginPercent > 50 ? 'danger' : ''}">
-                            $${result.marginRequired} (${result.marginPercent}%)
-                        </span>
-                    </div>
-                    
-                    <div class="result-item">
                         <span class="result-label">Risk:Reward:</span>
                         <span class="result-value">1:${result.riskReward}</span>
                     </div>
@@ -801,7 +841,6 @@
                     <p><strong>Stop Loss:</strong> ${result.stopLoss} (-${result.pipsAtRisk} pips)</p>
                     <p><strong>Take Profit:</strong> ${result.takeProfitPrice} (+${(result.pipsAtRisk * result.riskReward).toFixed(1)} pips)</p>
                     <p><strong>Risk:Reward:</strong> 1:${result.riskReward} | <strong>Instrument:</strong> ${result.currencyPair} (${result.instrumentType})</p>
-                    <p><strong>Funded Account Leverage:</strong> 1:${result.leverage}</p>
                 </div>
             </div>
         `;
@@ -893,8 +932,8 @@
                 stopInput.value = '189.00';
                 break;
             case 'CHFJPY':
-                entryInput.value = '169.50';
-                stopInput.value = '169.00';
+                entryInput.value = '184';
+                stopInput.value = '184.5';
                 break;
             case 'XAUUSD':
                 entryInput.value = '2050.0';
@@ -931,7 +970,7 @@
         }
     });
 
-    // Initialize with default EURUSD values
+    // Initialize with default XAU/USD values
     document.addEventListener('DOMContentLoaded', function() {
         console.log('Funded Trading Position Calculator loaded');
         // Auto-calculate on page load for demo
