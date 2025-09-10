@@ -1,0 +1,8 @@
+@@ .. @@
+         .logo {
+             color: #00d4ff;
+             font-size: 1.5rem;
+             font-weight: bold;
+             text-decoration: none;
++            letter-spacing: 1px;
+         }
